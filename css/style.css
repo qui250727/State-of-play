@@ -21,6 +21,18 @@ h1 {
   margin-top: 32px;
 }
 
+h4 {
+   color:#ffffff;
+  text-align: center;
+  margin-top: 32px; 
+}
+
+h5 {
+    color:#ffffff;
+    text-align: left;
+    margin-top: 32 px;
+    font-size: 0.85rem;
+}
 article {
     max-width: 900px;
     margin: 0 auto;
@@ -75,4 +87,21 @@ section {
     flex-direction: row;
     display: grid;
     grid-template-columns: 33% 33% 33%;
+}
+
+.Info {
+    margin: 0 16px 16px;
+    background-color: #586380;
+    border-radius: 10px;
+    padding:0 16px 16px;
+    display: flex;
+    flex-direction: column;
+    -ms-flex-align: center;
+}
+
+.Artikel {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 16px 40px;
+    background-color: #0f1222;
 }
