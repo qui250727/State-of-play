@@ -16,7 +16,7 @@ h1 {
 }
 
  h2, h3 {
-  color:#2c2c2c;
+  color:#e4e4e4;
   text-align: center;
   margin-top: 32px;
 }
@@ -73,7 +73,7 @@ iframe {
 
 section {
     margin-top: 40px;
-    background-color:#5f8cff;
+    background-color:#242424;
     border-radius: 10px;
     padding: 16px;
 }
@@ -90,10 +90,10 @@ section {
 }
 
 .Info {
-    margin: 0 16px 16px;
+    margin: 16px auto;
+    padding: 16px 16px 40px;
     background-color: #414141;
     border-radius: 10px;
-    padding:0 16px 16px;
     display: flex;
     flex-direction: column;
     -ms-flex-align: center;
@@ -108,11 +108,43 @@ section {
 
 .Neuheiten-img {
     margin-top: 40px;
-    background-color:#293a66;
+    background-color:#c5311e;
     border-radius: 10px;
     padding: 16px;
     display: flex;
     flex-direction: row;
     display: grid;
     grid-template-columns: 33% 33% 33%;
+}
+
+.Layout {
+    display: flex;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+.main {
+    flex: 1;           
+}
+
+.Menu {
+    width: 250px;          
+    flex-shrink: 0;        
+    margin: 16px 20px 16px 0;  
+    padding: 16px 16px 40px;
+    background-color: #75767a;
+    border-radius: 10px;
+}
+
+ul {
+    font-style: italic;
+    font-weight: bold;
+}
+
+a {
+   font-style: italic;
+    font-weight: bold;
+    color:#242424
 }
