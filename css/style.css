@@ -148,3 +148,10 @@ a {
     font-weight: bold;
     color:#242424
 }
+
+.Intro {
+  max-width: 900px;
+    margin: 0 auto;
+    padding: 0 16px 40px;  
+    background-color: #414141;
+}
