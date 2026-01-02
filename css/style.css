@@ -136,6 +136,9 @@ section {
     padding: 16px 16px 40px;
     background-color: #75767a;
     border-radius: 10px;
+    position: sticky;
+    top: 16px;            
+    align-self: flex-start;
 }
 
 ul {
@@ -154,4 +157,44 @@ a {
     margin: 0 auto;
     padding: 0 16px 40px;  
     background-color: #414141;
+}
+
+
+.Artikelnliste {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.Artikellinie {
+  display: grid;
+  grid-template-columns: 45px 1fr 85px;
+  align-items: center;
+  padding: 10px 12px;
+  background-color: #414141;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #eaeaea;
+}
+
+.Artikellinie:hover {
+    background-color: #4f4f4f;
+}
+
+.Artikellinie img {
+  width: 70px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.Trailers-N {
+    margin-top: 40px;
+    background-color:#ac7829;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
 }
