@@ -198,3 +198,21 @@ a {
     display: grid;
     grid-template-columns: 33% 33% 33%;
 }
+
+.artikel-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+.artikel-nav a {
+  padding: 10px 14px;
+  background-color: #414141;
+  border-radius: 8px;
+  color: #eaeaea;
+  font-weight: bold;
+}
+
+.artikel-nav a:hover {
+  background-color: #4f4f4f;
+}
