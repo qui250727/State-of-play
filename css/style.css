@@ -86,8 +86,10 @@ section {
     display: flex;
     flex-direction: row;
     display: grid;
-    grid-template-columns: 33% 33% 33%;
-}
+    grid-template-columns: 33% 33% 33%
+        
+    }
+
 
 .Info {
     margin: 16px auto;
@@ -215,4 +217,27 @@ a {
 
 .artikel-nav a:hover {
   background-color: #4f4f4f;
+}
+
+@media (max-width: 1000px) {
+  .Trailers { grid-template-columns: 1fr; }
+  .Neuheiten-img { grid-template-columns: 1fr; }
+  .Trailers-N { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 800px) {
+  .Layout {
+    flex-direction: column;
+  }
+
+  .Menu {
+    width: auto;              
+    margin: 16px;             
+    position: static;        
+  }
+
+  .main {
+    width: auto;
+    margin: 0 16px 16px;
+  }
 }
