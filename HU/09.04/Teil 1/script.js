@@ -1,3 +1,6 @@
+
+//Teil 1
+
 import persons from "./persons.json" with { type: "json" };
 
 function renderPersons() {
