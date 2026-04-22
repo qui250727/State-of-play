@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Produkte</title>
+</head>
+<body>
+    <table>
+    <thead>
+        <tr>
+            <th id="thname">Name</th>
+            <th id="thpreis">Preis (€)</th>
+        </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+</table>
+<script>
+const produkte = [
+    { name: "Laptop", preis: 899.99 },
+    { name: "Tischlampe", preis: 34.50 },
+    { name: "Kopfhörer", preis: 149.00 },
+    { name: "Kaffeetasse", preis: 12.90 },
+    { name: "Monitor", preis: 459.00 },
+];
+
+function renderTable() {
+    const tbody = document.querySelector("#tbody");
+    tbody.innerHTML = "";
+
+    for (const produkt of produkte) {
+        const tr = document.createElement("tr");
+
+        const tdName = document.createElement("td");
+        tdName.textContent = produkt.name;
+
+        const tdPreis = document.createElement("td");
+        tdPreis.textContent = produkt.preis;
+
+        tr.appendChild(tdName);
+        tr.appendChild(tdPreis);
+
+        tbody.appendChild(tr);
+    }
+}
+
+const thname = document.getElementById("thname");
+thname.addEventListener("click", () => {
+    produkte.sort((a, b) => a.name.localeCompare(b.name));
+    renderTable();
+});
+
+const thpreis = document.getElementById("thpreis");
+thpreis.addEventListener("click", () => {
+    produkte.sort((a, b) => a.preis - b.preis);
+    renderTable();
+});
+
+renderTable();
+</script>
+</body>
+</html>

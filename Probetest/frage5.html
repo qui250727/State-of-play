@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Produktsuche</title>
+</head>
+<body>
+    <h1>Produktsuche</h1>
+    <input type="text" id="search" placeholder="Suchbegriff eingeben...">
+    <div id="results"></div>
+    <script>
+        const produkte = [
+    { name: "Laptop", preis: 899.99, kategorie: "Elektronik" },
+    { name: "Tischlampe", preis: 34.50, kategorie: "Möbel" },
+    { name: "Kopfhörer", preis: 149.00, kategorie: "Elektronik" },
+    { name: "Kaffeemaschine", preis: 219.00, kategorie: "Haushalt" },
+    { name: "Monitor", preis: 459.00, kategorie: "Elektronik" },
+    { name: "Schreibtisch", preis: 289.00, kategorie: "Möbel" },
+    { name: "Kaffeetasse", preis: 12.90, kategorie: "Haushalt" },
+    ];
+
+    function renderResults(liste) {
+        const results = document.querySelector("#results");
+        results.innerHTML = "";
+
+        for (const produkt of liste) {
+            const div = document.createElement("div");
+            div.classList.add("product-card");
+            div.textContent = `${produkt.name} – €${produkt.preis} [${produkt.kategorie}]`;
+            results.appendChild(div);
+        }
+    } 
+    
+    function searchProducts() {
+    //valor del input
+        const searchValue = document.querySelector("#search").value.toLowerCase();
+
+    //filtrar productos
+        const filtered = produkte.filter(produkt =>
+        produkt.name.toLowerCase().includes(searchValue)
+        );
+
+    //renderizar resultados
+        renderResults(filtered);
+    }   
+
+    document.querySelector("#search")
+    .addEventListener("input", searchProducts);
+
+    renderResults(produkte);
+
+    </script>
+</body>
+</html>
+
+

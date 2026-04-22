@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Produkte</title>
+</head>
+<body>
+    <ul id="product-list"></ul>
+
+    <script>
+        const produkte = [
+            { id: 1, name: "Laptop", preis: 899.99, kategorie: "Elektronik" },
+            { id: 2, name: "Tischlampe", preis: 34.50, kategorie: "Möbel" },
+            { id: 3, name: "Kopfhörer", preis: 149.00, kategorie: "Elektronik" },
+            { id: 4, name: "Kaffeetasse", preis: 12.90, kategorie: "Haushalt" },
+            { id: 5, name: "Monitor", preis: 459.00, kategorie: "Elektronik" },
+        ];
+
+        function renderProducts() {
+            const ul = document.querySelector("#product-list");
+
+            for (const produkt of produkte) {
+                const li = document.createElement("li");
+                li.textContent = `${produkt.name} (${produkt.kategorie}) – €${produkt.preis}`;
+                ul.appendChild(li);
+            }
+        }
+
+        renderProducts();
+    </script>
+</body>
+</html>
