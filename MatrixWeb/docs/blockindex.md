@@ -13,12 +13,10 @@
 
 ## Block 1 – Java Matrices
 
-- [ ] Activity 1 – Create Java project
-- [ ] Activity 2 – Matrix class
-- [ ] Activity 3 – Constructor & data storage
-- [ ] Activity 4 – Print matrix
-- [ ] Activity 5 – Get dimensions
-- [ ] Activity 6 – Validate matrix
+- [ x] Activity 1 – Create Java project
+- [ x] Activity 2 – Matrix class
+- [ x] Activity 4 – Print matrix
+- [ x] Activity 5 – Get dimensions
 - [ ] Activity 7 – Addition
 - [ ] Activity 8 – Test addition
 - [ ] Activity 9 – Subtraction

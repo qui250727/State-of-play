@@ -10,15 +10,22 @@ class MatrixTest {
             {1,2,3},
             {2,3,5}
         };
-        Matrix m = new Matrix(data);
-        assertNotNull(m);//Alles ist ok
+        try {
+            Matrix m = new Matrix(data);
+            assertNotNull(m);
+        }catch(InvalidMatrixException e){
+            fail("exception was not expected");
+        }
     }
     @Test
     void testValidateMatrixNull() {//
-        assertThrows(InvalidMatrixException.class, () -> {
+        try{
             new Matrix(null);
-                });
-    }
+            fail ("expected InvalidMatrixexception");
+        }catch(InvalidMatrixException e){
+            assertEquals("Matrix can´t be null",e.getMessage());
+        }
+    };
 
     @Test
     void testValidateMatrixNotRectangular() {
@@ -26,17 +33,44 @@ class MatrixTest {
                 {1,2,3},
                 {2,3}
         };
-        assertThrows(InvalidMatrixException.class, () -> {
-            new Matrix(data);
-        });
+        try{
+            Matrix m = new Matrix(data);
+            fail ("expected InvalidMatrixException");
+        }catch(InvalidMatrixException e){
+            assertEquals("Matrix must have always the same number of columns and rows",e.getMessage());
+        }
     }
 
     @Test
     void testValidateMatrixEmpty(){
     int[][] data = {};
+    try{
+        Matrix m = new Matrix(data);
+        fail ("expected InvalidMatrixException");
+    }catch(InvalidMatrixException e){
+        assertEquals("Matrix can't be empty", e.getMessage());
+    }
+    }
 
-    assertThrows(InvalidMatrixException.class, () -> {
-    new Matrix(data);
-    });
+    @Test
+    void TestGetRows() {
+        int [][] data = {
+                {1,2,3},
+                {2,3,5}
+        };
+        Matrix m = new Matrix(data);
+        m.getRows();
+        assertEquals(2,m.getRows());
+    }
+
+    @Test
+    void TestGetColumns() {
+        int [][] data = {
+                {1,2,3},
+                {2,3,5}
+        };
+        Matrix m = new Matrix(data);
+        m.getColumns();
+        assertEquals(3,m.getColumns());
     }
 }

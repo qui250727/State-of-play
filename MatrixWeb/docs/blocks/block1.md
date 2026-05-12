@@ -132,21 +132,29 @@ package edu.nicolasQuintero.matrixWeb;
 import  org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 class MatrixTest {
-@Test
+
+    @Test
     void testValidateMatrixOk() {
         int [][] data = {
             {1,2,3},
             {2,3,5}
         };
-        Matrix m = new Matrix(data);
-        assertNotNull(m);
+        try {
+            Matrix m = new Matrix(data);
+            assertNotNull(m);
+        }catch(InvalidMatrixException e){
+            fail("exception was not expected");
+        }
     }
     @Test
-    void testValidateMatrixNull() {
-        assertThrows(InvalidMatrixException.class, () -> {
+    void testValidateMatrixNull() {//
+        try{
             new Matrix(null);
-                });
-    }
+            fail ("expected InvalidMatrixexception");
+        }catch(InvalidMatrixException e){
+            assertEquals("Matrix can´t be null",e.getMessage());
+        }
+    };
 
     @Test
     void testValidateMatrixNotRectangular() {
@@ -154,21 +162,103 @@ class MatrixTest {
                 {1,2,3},
                 {2,3}
         };
-        assertThrows(InvalidMatrixException.class, () -> {
-            new Matrix(data);
-        });
+        try{
+            Matrix m = new Matrix(data);
+            fail ("expected InvalidMatrixException");
+        }catch(InvalidMatrixException e){
+            assertEquals("Matrix must have always the same number of columns and rows",e.getMessage());
+        }
     }
 
     @Test
     void testValidateMatrixEmpty(){
     int[][] data = {};
-
-    assertThrows(InvalidMatrixException.class, () -> {
-    new Matrix(data);
-    });
+    try{
+        Matrix m = new Matrix(data);
+        fail ("expected InvalidMatrixException");
+    }catch(InvalidMatrixException e){
+        assertEquals("Matrix can't be empty", e.getMessage());
+    }
     }
 }
 
+```
+
+#### Common Mistakes
+
+#### Notes
+
+#### Project Integration
+Base Class for the Project (input validation)
+
+### Activity 3 – Print matrix
+
+#### Objective
+To be able to see the matrix with we are going to work
+#### Glossary
+
+#### Explanation
+We would do a Forloop in order to see every column and row of the matrix 
+#### Code
+```java
+
+public void printMatrix(){
+        for(int i = 0; i < data.length; i++){ // er checkt die Zeilen(filas)
+            for(int j = 0; j < data[i].length;j++) { //checkt die Spalten der Zeile
+                System.out.print(data[i][j]+" "); //druckt jeder nummer von der selben Linien
+            }
+            System.out.println();//Springt zur der nächsten Linie
+        }
+    }
+
+```
+
+#### Test(main)
+```java
+
+public class Main {
+    public static void main(String[] args) {
+
+        int[][] values = {
+                {1, 2},
+                {3, 4}
+        };
+
+        Matrix m = new Matrix(values);
+        m.printMatrix();//Druckmethode probieren
+    }
+}
+
+```
+
+#### Example
+C:\Users\Lenovo\.jdks\openjdk-25.0.2\bin\java.exe "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2025.3.1\lib\idea_rt.jar=56111" -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath "F:\INFORMATIK\3BKIF\WMC\State of play\MatrixWeb\backend\matrixWeb\target\classes" edu.nicolasQuintero.matrixWeb.Main
+1 2 
+3 4 
+
+Process finished with exit code 0
+#### Common Mistakes
+
+#### Notes
+
+#### Project Integration
+That way we are going to be able to see the matrix
+---
+
+### Activity 4 – Get dimensions
+
+#### Objective
+
+#### Glossary
+
+#### Explanation
+
+#### Code
+```java
+```
+
+#### Test
+```java
 ```
 
 #### Example
@@ -180,10 +270,6 @@ class MatrixTest {
 #### Project Integration
 
 
-### Activity 3 – Constructor and data storage
-### Activity 4 – Print matrix
-### Activity 5 – Get dimensions
-### Activity 6 – Validate matrix
 ### Activity 7 – Addition
 ### Activity 8 – Test addition
 ### Activity 9 – Subtraction
