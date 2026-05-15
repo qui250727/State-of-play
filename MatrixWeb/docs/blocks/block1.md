@@ -255,20 +255,50 @@ That way we are going to be able to see the matrix
 
 #### Code
 ```java
+
+public int getRows(){
+        return data.length;
+    };
+
+    public int getColumns(){
+        return data[0].length;
+    };
+
+
 ```
 
-#### Test
+#### Test (Main)
 ```java
+
+public class Main {
+    public static void main(String[] args) {
+
+        int[][] values = {
+                {1, 2, 3, 4},
+                {3, 4, 5, 6}
+        };
+
+        Matrix m = new Matrix(values);
+        m.printMatrix();//Druckmethode probieren
+        System.out.println("Rows: "+ m.getRows());//getRows
+        System.out.println("Columns: "+ m.getColumns());//getColumns
+    }
+}
+
 ```
 
 #### Example
-
+1 2 3 4 
+3 4 5 6 
+Rows: 2
+Columns: 4
 #### Common Mistakes
 
 #### Notes
 
 #### Project Integration
 
+GetRows and GetColums will allowd us to create diferent methods for our Matrix-Calculator and to define the Matrix.
 
 ### Activity 7 – Addition
 ### Activity 8 – Test addition

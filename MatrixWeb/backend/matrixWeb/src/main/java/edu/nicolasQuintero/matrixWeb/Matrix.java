@@ -42,6 +42,19 @@ public class Matrix {
         return data[0].length;
     };
 
+    public Matrix addition(Matrix other){
+        if ((this.getRows() != other.getRows()) || (this.getColumns() != other.getColumns())){
+            throw new InvalidMatrixException("The matrices must have the same dimentions");
+        }
+        int [][] result = new int [getRows()][getColumns()];
+        for (int i = 0; i < getRows(); i++){
+            for (int j = 0; j < getColumns(); j++){
+                result [i][j]= this.data[i][j]+ other.data[i][j];
+            }
+        }
+        return new Matrix(result);
+    }
+
     public void printMatrix(){
         for(int i = 0; i < data.length; i++){ // er checkt die Zeilen(filas)
             for(int j = 0; j < data[i].length;j++) { //checkt die Spalten der Zeile

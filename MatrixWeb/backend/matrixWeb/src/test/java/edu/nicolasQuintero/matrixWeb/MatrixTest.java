@@ -73,4 +73,9 @@ class MatrixTest {
         m.getColumns();
         assertEquals(3,m.getColumns());
     }
+
+    @Test
+    void TestAdditionOK() {
+        
+    }
 }
