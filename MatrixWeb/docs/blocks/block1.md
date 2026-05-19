@@ -14,32 +14,6 @@ This block focuses on implementing matrix operations in Java.
 
 ---
 
-## Template
-
-#### Objective
-
-#### Glossary
-
-#### Explanation
-
-#### Code
-```java
-```
-
-#### Test
-```java
-```
-
-#### Example
-
-#### Common Mistakes
-
-#### Notes
-
-#### Project Integration
-
----
-
 ## Activities
 
 ### Activity 1 – Create Java project
@@ -300,19 +274,433 @@ Columns: 4
 
 GetRows and GetColums will allowd us to create diferent methods for our Matrix-Calculator and to define the Matrix.
 
-### Activity 7 – Addition
-### Activity 8 – Test addition
-### Activity 9 – Subtraction
-### Activity 10 – Test subtraction
-### Activity 11 – Multiplication (theory)
-### Activity 12 – Multiplication (implementation)
-### Activity 13 – Test multiplication
-### Activity 14 – Transpose
-### Activity 15 – Test transpose
-### Activity 16 – Scalar multiplication
-### Activity 17 – Test scalar
-### Activity 18 – Validations
-### Activity 19 – Exceptions
-### Activity 20 – Refactor
+### Activity 5 – Addition
+
+### Objective
+Start to create basic methods that would allow us to implement other complex methods for the Algorithms. Thats why we implemented a new administration class wo will manage everything what has to do with the graphs.
+#### Glossary
+
+#### Explanation
+This administration class work with a list of matrices that allow us to get important information throwth basic methods like countMatrix or getMatrix(index) about the same list or list items and to do different operations between themself. 
+#### Code new class
+```java
+package edu.nicolasQuintero.matrixWeb;
+
+import java.util.ArrayList;
+
+public class MatrixWorkspace {
+    public ArrayList<Matrix> matrices;
+
+    public MatrixWorkspace() {
+        matrices = new ArrayList<>(2);
+    }
+
+    public int matrixCount(){
+        return matrices.size();
+    }
+
+    public void addMatrix(Matrix m){
+            matrices.add(m);
+    }
+
+    public void removeMatrix(Matrix m){
+        matrices.remove(m);
+    }
+
+    public Matrix getMatrix(int index){
+        return matrices.get(index);
+    }
+
+    public Matrix matrixAddition(Matrix a, Matrix b)throws InvalidMatrixException{
+        if ((a.getRows() != b.getRows()) || (a.getColumns() != b.getColumns())){
+            throw new InvalidMatrixException("The matrices must have the same dimentions");
+        }
+        int [][] result = new int [a.getRows()][a.getColumns()];
+        for (int i = 0; i < a.getRows(); i++){
+            for (int j = 0; j < a.getColumns(); j++){
+                result [i][j]= a.getData()[i][j]+ b.getData()[i][j];
+            }
+        }
+        return new Matrix(result);
+    }
+
+}
+
+
+```
+
+#### Test(main)
+```java
+
+public class Main {
+    public static void main(String[] args) throws InvalidMatrixException {
+        int[][] a = {
+                {1,2,3,4},
+                {3,4,5,6}
+        };
+        int[][] b = {
+                {1,5,6,7},
+                {5,4,5,6}
+        };
+        MatrixWorkspace mw = new MatrixWorkspace();
+        Matrix m0 = new Matrix(a);
+        Matrix m1 = new Matrix(b);
+        mw.addMatrix(m0);
+        mw.addMatrix(m1);
+        Matrix result= mw.matrixAddition(m0, m1);
+        System.out.println("Matrix m0:");
+        m0.printMatrix();//Druckmethode probieren
+        System.out.println("Rows: "+ m0.getRows());//getRows
+        System.out.println("Columns: "+ m0.getColumns());//getColumns
+        System.out.println("-------------------");
+        System.out.println("Matrix m1:");
+        m1.printMatrix();
+        System.out.println("Rows: "+ m1.getRows());
+        System.out.println("Columns: "+ m1.getColumns());
+        System.out.println("-------------------");
+        System.out.println("Matrix Result:");
+        result.printMatrix();
+        System.out.println("Rows: "+ result.getRows());
+        System.out.println("Columns: "+ result.getColumns());
+    }
+}
+
+```
+#### Test (Utest)
+```java
+
+package edu.nicolasQuintero.matrixWeb;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class MatrixWorkspaceTest {
+
+    @Test
+    public void testRemoveMatrix() throws InvalidMatrixException {
+        MatrixWorkspace mw = new MatrixWorkspace();
+        int [][] data = {
+                {1,2,3},
+                {2,3,5}
+        };
+        Matrix m = new Matrix(data);
+        mw.addMatrix(m);
+        assertEquals(1, mw.matrixCount());
+        mw.removeMatrix(m);
+        assertEquals(0,mw.matrixCount());
+    }
+
+    @Test
+    public void testMatrixAddition() throws InvalidMatrixException {
+        MatrixWorkspace mw = new MatrixWorkspace();
+        int [][] a = {
+                {1,2,3},
+                {2,3,5}
+        };
+        Matrix m0 = new Matrix(a);
+        mw.addMatrix(m0);
+        int [][] b = {
+                {5,6,7},
+                {8,2,1}
+        };
+        Matrix m1 = new Matrix(b);
+        mw.addMatrix(m1);
+        Matrix result = mw.matrixAddition(m0,m1);
+        assertEquals(6, result.getData()[0][0]);
+        assertEquals(8, result.getData()[0][1]);
+        assertEquals(10, result.getData()[0][2]);
+        assertEquals(10, result.getData()[1][0]);
+        assertEquals(5, result.getData()[1][1]);
+        assertEquals(6, result.getData()[1][2]);
+    }
+
+}
+
+```
+#### Example
+Matrix m0:
+1 2 3 4 
+3 4 5 6 
+Rows: 2
+Columns: 4
+-------------------
+Matrix m1:
+1 5 6 7 
+5 4 5 6 
+Rows: 2
+Columns: 4
+-------------------
+Matrix Result:
+2 7 9 11 
+8 8 10 12 
+Rows: 2
+Columns: 4
+#### Common Mistakes
+
+#### Notes
+the exceptions where changed to extends Exceptions and not RuntimeExceptions in order to understand more the try, throw, catch, etc.
+#### Project Integration
+This addition method and the creation of the new class will allow us to understand really how the program works and to create shorter classes that are easy to understand.
+---
+
+### Activity 6 – Subtraction
+#### Objective
+
+#### Glossary
+
+#### Explanation
+
+#### Code
+```java
+
+public Matrix matrixSubstraction(Matrix a, Matrix b)throws InvalidMatrixException{
+        if ((a.getRows() != b.getRows()) || (a.getColumns() != b.getColumns())){
+            throw new InvalidMatrixException("The matrices must have the same dimentions");
+        }
+        int [][] result = new int [a.getRows()][a.getColumns()];
+        for (int i = 0; i < a.getRows(); i++){
+            for (int j = 0; j < a.getColumns(); j++){
+                result [i][j]= a.getData()[i][j]- b.getData()[i][j];
+            }
+        }
+        return new Matrix(result);
+    }
+
+```
+
+#### Test (Utest)
+```java
+
+@Test
+    public void testMatrixSubstraction() throws InvalidMatrixException {
+        MatrixWorkspace mw = new MatrixWorkspace();
+        int [][] a = {
+                {1,2,3},
+                {2,3,5}
+        };
+        Matrix m0 = new Matrix(a);
+        mw.addMatrix(m0);
+        int [][] b = {
+                {5,6,7},
+                {8,2,1}
+        };
+        Matrix m1 = new Matrix(b);
+        mw.addMatrix(m1);
+        Matrix result = mw.matrixSubstraction(m0,m1);
+        assertEquals(-4, result.getData()[0][0]);
+        assertEquals(-4, result.getData()[0][1]);
+        assertEquals(-4, result.getData()[0][2]);
+        assertEquals(-6, result.getData()[1][0]);
+        assertEquals(1, result.getData()[1][1]);
+        assertEquals(4, result.getData()[1][2]);
+    }
+
+```
+#### Test (main)
+```java
+
+public class Main {
+    public static void main(String[] args) throws InvalidMatrixException {
+        int[][] a = {
+                {1,2,3,4},
+                {3,4,5,6}
+        };
+        int[][] b = {
+                {1,5,6,7},
+                {5,4,5,6}
+        };
+        MatrixWorkspace mw = new MatrixWorkspace();
+        Matrix m0 = new Matrix(a);
+        Matrix m1 = new Matrix(b);
+        mw.addMatrix(m0);
+        mw.addMatrix(m1);
+        Matrix result= mw.matrixSubstraction(m0, m1);
+        System.out.println("Matrix m0:");
+        m0.printMatrix();//Druckmethode probieren
+        System.out.println("Rows: "+ m0.getRows());//getRows
+        System.out.println("Columns: "+ m0.getColumns());//getColumns
+        System.out.println("-------------------");
+        System.out.println("Matrix m1:");
+        m1.printMatrix();
+        System.out.println("Rows: "+ m1.getRows());
+        System.out.println("Columns: "+ m1.getColumns());
+        System.out.println("-------------------");
+        System.out.println("Matrix Result:");
+        result.printMatrix();
+        System.out.println("Rows: "+ result.getRows());
+        System.out.println("Columns: "+ result.getColumns());
+    }
+}
+
+
+```
+#### Example
+Matrix m0:
+1 2 3 4 
+3 4 5 6 
+Rows: 2
+Columns: 4
+-------------------
+Matrix m1:
+1 5 6 7 
+5 4 5 6 
+Rows: 2
+Columns: 4
+-------------------
+Matrix Result:
+0 -3 -3 -3 
+-2 0 0 0 
+Rows: 2
+Columns: 4
+#### Common Mistakes
+
+#### Notes
+Negative results are valid.
+#### Project Integration
 
 ---
+### Activity 7 – Multiplication 
+
+#### Objective
+This is actually the most important operation that we are going to need for our Graph Algorithms, it will allow us to calculate the square matrix and to elevate our matrix in order to find the shorter distance and other important graph values.
+#### Glossary
+
+#### Explanation
+I order to do this methode we do have to write 3 diferent loops, one that let us advance between the rows and between the columns another to multiplicate them and a last one that add this multiplications in order to create a result in the expected position. In this case, the nomber of rows and columns must be the same or it wont work.
+#### Code
+```java
+
+public Matrix matrixMultiplication(Matrix a, Matrix b)throws InvalidMatrixException {
+        if (a.getColumns() != b.getRows()) {
+            throw new InvalidMatrixException("Matrix multiplication not possible");
+        }
+        int[][] result = new int[a.getRows()][b.getColumns()];
+        for (int i = 0; i < a.getRows(); i++) { //it records the rows 
+            for (int j = 0; j < b.getColumns(); j++) {//it records the columns
+                for (int k = 0; k < a.getColumns(); k++) { //it create the result of the next operation in the correct position
+                    result[i][j] = result[i][j] + (a.getData()[i][k] * b.getData()[k][j]);
+                }
+            }
+        }
+        return new Matrix(result);
+    }
+
+```
+
+#### Test (Utest)
+```java
+
+public void testMatrixMultiplication() throws InvalidMatrixException {
+        MatrixWorkspace mw = new MatrixWorkspace();
+        int [][] a = {
+                {1,2,3,4},
+                {3,4,5,6},
+                {1,5,3,4},
+                {3,4,3,6}
+        };
+        Matrix m0 = new Matrix(a);
+        mw.addMatrix(m0);
+        int [][] b = {
+                {1,5,6,7},
+                {5,4,5,6},
+                {8,5,6,7},
+                {5,4,7,6}
+        };
+        Matrix m1 = new Matrix(b);
+        mw.addMatrix(m1);
+        Matrix result = mw.matrixMultiplication(m0,m1);
+        assertEquals(55, result.getData()[0][0]);
+        assertEquals(44, result.getData()[0][1]);
+        assertEquals(62, result.getData()[0][2]);
+        assertEquals(64, result.getData()[0][3]);
+        assertEquals(93, result.getData()[1][0]);
+        assertEquals(80, result.getData()[1][1]);
+        assertEquals(110, result.getData()[1][2]);
+        assertEquals(116, result.getData()[1][3]);
+        assertEquals(70, result.getData()[2][0]);
+        assertEquals(56, result.getData()[2][1]);
+        assertEquals(77, result.getData()[2][2]);
+        assertEquals(82, result.getData()[2][3]);
+        assertEquals(77, result.getData()[3][0]);
+        assertEquals(70, result.getData()[3][1]);
+        assertEquals(98, result.getData()[3][2]);
+        assertEquals(102, result.getData()[3][3]);
+
+    }
+
+```
+#### Test (main)
+```java
+
+public class Main {
+    public static void main(String[] args) throws InvalidMatrixException {
+        int[][] a = {
+                {1,2,3,4},
+                {3,4,5,6},
+                {1,5,3,4},
+                {3,4,3,6}
+        };
+        int[][] b = {
+                {1,5,6,7},
+                {5,4,5,6},
+                {8,5,6,7},
+                {5,4,7,6}
+        };
+        MatrixWorkspace mw = new MatrixWorkspace();
+        Matrix m0 = new Matrix(a);
+        Matrix m1 = new Matrix(b);
+        mw.addMatrix(m0);
+        mw.addMatrix(m1);
+        Matrix result= mw.matrixMultiplication(m0, m1);
+        System.out.println("Matrix m0:");
+        m0.printMatrix();//Druckmethode probieren
+        System.out.println("Rows: "+ m0.getRows());//getRows
+        System.out.println("Columns: "+ m0.getColumns());//getColumns
+        System.out.println("-------------------");
+        System.out.println("Matrix m1:");
+        m1.printMatrix();
+        System.out.println("Rows: "+ m1.getRows());
+        System.out.println("Columns: "+ m1.getColumns());
+        System.out.println("-------------------");
+        System.out.println("Matrix Result:");
+        result.printMatrix();
+        System.out.println("Rows: "+ result.getRows());
+        System.out.println("Columns: "+ result.getColumns());
+    }
+
+```
+#### Example
+
+Matrix m0:
+1 2 3 4 
+3 4 5 6 
+1 5 3 4 
+3 4 3 6 
+Rows: 4
+Columns: 4
+-------------------
+Matrix m1:
+1 5 6 7 
+5 4 5 6 
+8 5 6 7 
+5 4 7 6 
+Rows: 4
+Columns: 4
+-------------------
+Matrix Result:
+55 44 62 64 
+93 80 110 116 
+70 56 77 82 
+77 70 98 102 
+Rows: 4
+Columns: 4
+
+#### Common Mistakes
+Write the wrong number of columns or rows
+#### Notes
+
+#### Project Integration
+All the basic operations for the Graphalgorithms are ready.
+---
+

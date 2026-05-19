@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MatrixTest {
 
     @Test
-    void testValidateMatrixOk() {
+    void testValidateMatrixOk() throws InvalidMatrixException{
         int [][] data = {
             {1,2,3},
             {2,3,5}
@@ -18,7 +18,7 @@ class MatrixTest {
         }
     }
     @Test
-    void testValidateMatrixNull() {//
+    void testValidateMatrixNull() throws InvalidMatrixException {//
         try{
             new Matrix(null);
             fail ("expected InvalidMatrixexception");
@@ -28,7 +28,7 @@ class MatrixTest {
     };
 
     @Test
-    void testValidateMatrixNotRectangular() {
+    void testValidateMatrixNotRectangular() throws InvalidMatrixException{
         int [][] data = {
                 {1,2,3},
                 {2,3}
@@ -42,7 +42,7 @@ class MatrixTest {
     }
 
     @Test
-    void testValidateMatrixEmpty(){
+    void testValidateMatrixEmpty() throws InvalidMatrixException{
     int[][] data = {};
     try{
         Matrix m = new Matrix(data);
@@ -53,7 +53,7 @@ class MatrixTest {
     }
 
     @Test
-    void TestGetRows() {
+    void TestGetRows() throws InvalidMatrixException {
         int [][] data = {
                 {1,2,3},
                 {2,3,5}
@@ -64,7 +64,7 @@ class MatrixTest {
     }
 
     @Test
-    void TestGetColumns() {
+    void TestGetColumns() throws InvalidMatrixException {
         int [][] data = {
                 {1,2,3},
                 {2,3,5}
@@ -72,10 +72,5 @@ class MatrixTest {
         Matrix m = new Matrix(data);
         m.getColumns();
         assertEquals(3,m.getColumns());
-    }
-
-    @Test
-    void TestAdditionOK() {
-        
     }
 }

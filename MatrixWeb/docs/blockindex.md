@@ -15,37 +15,24 @@
 
 - [ x] Activity 1 – Create Java project
 - [ x] Activity 2 – Matrix class
-- [ x] Activity 4 – Print matrix
-- [ x] Activity 5 – Get dimensions
-- [ ] Activity 7 – Addition
-- [ ] Activity 8 – Test addition
-- [ ] Activity 9 – Subtraction
-- [ ] Activity 10 – Test subtraction
-- [ ] Activity 11 – Multiplication (theory)
-- [ ] Activity 12 – Multiplication (implementation)
-- [ ] Activity 13 – Test multiplication
-- [ ] Activity 14 – Transpose
-- [ ] Activity 15 – Test transpose
-- [ ] Activity 16 – Scalar multiplication
-- [ ] Activity 17 – Test scalar
-- [ ] Activity 18 – Validations
-- [ ] Activity 19 – Exceptions
-- [ ] Activity 20 – Refactor
+- [ x] Activity 3 – Print matrix
+- [ x] Activity 4 – Get dimensions
+- [ x] Activity 5 – Addition
+- [ x] Activity 6 – Subtraction
+- [ x] Activity 7 – Multiplication 
 
 ---
 
 ## Block 2 – Graph Fundamentals (Java)
 
-- [ ] Activity 21 – Adjacency matrix concept
-- [ ] Activity 22 – Detect square matrix
-- [ ] Activity 23 – Validate graph matrix
-- [ ] Activity 24 – Extract nodes
-- [ ] Activity 25 – Extract edges
-- [ ] Activity 26 – Directed vs undirected
-- [ ] Activity 27 – Test direction
-- [ ] Activity 28 – Node degrees
-- [ ] Activity 29 – Test degrees
-- [ ] Activity 30 – Weighted graphs
+- [ x] Activity 8 – GraphMatrix Class
+- [ ] Activity  9 – Extract nodes
+- [ ] Activity 10 – Extract edges
+- [ ] Activity 11 – Directed vs undirected
+- [ ] Activity 12 – Test direction
+- [ ] Activity 13 – Node degrees
+- [ ] Activity 14 – Test degrees
+- [ ] Activity 15 – Weighted graphs
 
 ---
 

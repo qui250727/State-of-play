@@ -3,7 +3,7 @@ package edu.nicolasQuintero.matrixWeb;
 public class Matrix {
     private int[][] data;
 
-    public Matrix(int[][] data) {
+    public Matrix(int[][] data) throws InvalidMatrixException {
         validateMatrix(data);//Wichtig bei der Konstruktor zu validieren.
         this.data = data;
     }
@@ -13,12 +13,12 @@ public class Matrix {
         return data;
     }
 
-    public void setData(int[][] data) {
+    public void setData(int[][] data) throws InvalidMatrixException {
         validateMatrix(data);//Methode validation
         this.data = data;
     }
 
-    public void validateMatrix(int[][] data) {//Gultigkeit des Matrixes
+    public void validateMatrix(int[][] data) throws InvalidMatrixException{//Gultigkeit des Matrixes
         if (data == null) {
             throw new InvalidMatrixException("Matrix can´t be null");
         }
@@ -29,7 +29,8 @@ public class Matrix {
 
         for (int i = 0; i < data.length; i++) {
             if (data[i].length != columns) {
-                throw new InvalidMatrixException("Matrix must have always the same number of columns and rows");
+                throw new InvalidMatrixException("All rows must have the same number of columns");
+                //it can be a matrix 2x3 but just if the every row have 3 columns
             }
         }
     };
@@ -41,19 +42,6 @@ public class Matrix {
     public int getColumns(){
         return data[0].length;
     };
-
-    public Matrix addition(Matrix other){
-        if ((this.getRows() != other.getRows()) || (this.getColumns() != other.getColumns())){
-            throw new InvalidMatrixException("The matrices must have the same dimentions");
-        }
-        int [][] result = new int [getRows()][getColumns()];
-        for (int i = 0; i < getRows(); i++){
-            for (int j = 0; j < getColumns(); j++){
-                result [i][j]= this.data[i][j]+ other.data[i][j];
-            }
-        }
-        return new Matrix(result);
-    }
 
     public void printMatrix(){
         for(int i = 0; i < data.length; i++){ // er checkt die Zeilen(filas)
