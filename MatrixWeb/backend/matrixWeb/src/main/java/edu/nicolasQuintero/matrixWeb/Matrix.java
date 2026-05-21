@@ -1,5 +1,7 @@
 package edu.nicolasQuintero.matrixWeb;
 
+import java.util.Arrays;
+
 public class Matrix {
     private int[][] data;
 
@@ -43,12 +45,16 @@ public class Matrix {
         return data[0].length;
     };
 
-    public void printMatrix(){
-        for(int i = 0; i < data.length; i++){ // er checkt die Zeilen(filas)
-            for(int j = 0; j < data[i].length;j++) { //checkt die Spalten der Zeile
-                System.out.print(data[i][j]+" "); //druckt jeder nummer von der selben Linien
+
+    @Override
+    public String toString() {
+        String content = "";
+        for(int i = 0; i < data.length; i++) { // er checkt die Zeilen(filas)
+            for (int j = 0; j < data[i].length; j++) { //checkt die Spalten der Zeile
+                content = content + data[i][j] + " ";
             }
-            System.out.println();//Springt zur der nächsten Linie
+            content = content + "\n";
         }
+        return content;
     }
 }

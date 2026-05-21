@@ -3,36 +3,26 @@ package edu.nicolasQuintero.matrixWeb;
 public class Main {
     public static void main(String[] args) throws InvalidMatrixException {
         int[][] a = {
-                {1,2,3,4},
-                {3,4,5,6},
-                {1,5,3,4},
-                {3,4,3,6}
+                {0,1,1,1},
+                {1,0,1,0},
+                {1,1,0,1},
+                {1,1,1,0}
         };
-        int[][] b = {
-                {1,5,6,7},
-                {5,4,5,6},
-                {8,5,6,7},
-                {5,4,7,6}
-        };
-        MatrixWorkspace mw = new MatrixWorkspace();
-        Matrix m0 = new Matrix(a);
-        Matrix m1 = new Matrix(b);
-        mw.addMatrix(m0);
-        mw.addMatrix(m1);
-        Matrix result= mw.matrixMultiplication(m0, m1);
-        System.out.println("Matrix m0:");
-        m0.printMatrix();//Druckmethode probieren
-        System.out.println("Rows: "+ m0.getRows());//getRows
-        System.out.println("Columns: "+ m0.getColumns());//getColumns
+        GraphMatrix gm0 = new GraphMatrix(a, true);
+
+
+        System.out.println("GraphMatrix gm0:");
+        System.out.println(gm0.toString());;//Druckmethode probieren
+        System.out.println("Rows: "+ gm0.getRows());//getRows
+        System.out.println("Columns: "+ gm0.getColumns());//getColumns
         System.out.println("-------------------");
-        System.out.println("Matrix m1:");
-        m1.printMatrix();
-        System.out.println("Rows: "+ m1.getRows());
-        System.out.println("Columns: "+ m1.getColumns());
-        System.out.println("-------------------");
-        System.out.println("Matrix Result:");
-        result.printMatrix();
-        System.out.println("Rows: "+ result.getRows());
-        System.out.println("Columns: "+ result.getColumns());
+        System.out.println("nodes: " + gm0.extractNodes());
+        System.out.println("node 0 degree:"+gm0.nodeDegree(0));
+        System.out.println("node 1 degree:"+gm0.nodeDegree(1));
+        System.out.println("node 2 degree:"+gm0.nodeDegree(2));
+        System.out.println("node 3 degree:"+gm0.nodeDegree(3));
+        System.out.println("edges: " + gm0.extractEdges());
+        System.out.println("Has it a selfloop? " + gm0.hasSelfloops());
+        System.out.println("Is it directed? " + gm0.isDirected());
     }
 }
