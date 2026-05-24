@@ -47,7 +47,7 @@ public class GraphMatrix extends Matrix{
         for(int i = 0;i < getRows();i++){ //check the rows
             for(int j = 0; j < getColumns();j++){ //check the columns
                 if (getData()[i][j]!=0) { //when the columns and the rows hit each other and the result is not 0
-                    edges.add(i + " -> " + j); //it print witch node have a conection with another node(a node could also conect with himself)
+                    edges.add(i + " -> " + j); //it prints witch node have a connection with another node(a node could also conect with himself)
                 }
             }
         }
@@ -57,7 +57,7 @@ public class GraphMatrix extends Matrix{
     public boolean isDirected(){
         for(int i = 0; i < getRows();i++){
             for(int j = 0; j < getColumns();j++){
-                if(getData()[i][j]!=getData()[j][i]){ //if has a conection between a and b but not between b and a is directed.
+                if(getData()[i][j]!=getData()[j][i]){ //if has a connection between a and b but not between b and a is directed.
                     return true;
                 }
             }
@@ -73,6 +73,16 @@ public class GraphMatrix extends Matrix{
             }
         }
         return degree;
+    }
+
+    public ArrayList<Integer> getNeighbors(int node){
+        ArrayList<Integer> neighbors = new ArrayList<Integer>();
+        for (int i = 0; i < getRows(); i++){
+            if (getData()[node][i]!=0){
+                neighbors.add(i);
+            }
+        }
+        return neighbors;
     }
 
     @Override

@@ -616,7 +616,23 @@ public class Main {
 
 ```
 #### Example
-
+GraphMatrix gm0:
+0 1 1 1 
+1 0 1 0 
+1 1 0 1 
+1 1 1 0 
+It is a weight graph.
+Rows: 4
+Columns: 4
+-------------------
+nodes: [0, 1, 2, 3]
+node 0 degree:3
+node 1 degree:3
+node 2 degree:3
+node 3 degree:2
+edges: [0 -> 1, 0 -> 2, 0 -> 3, 1 -> 0, 1 -> 2, 2 -> 0, 2 -> 1, 2 -> 3, 3 -> 0, 3 -> 1, 3 -> 2]
+Has it a selfloop? false
+Is it directed? true
 #### Common Mistakes
 
 #### Notes

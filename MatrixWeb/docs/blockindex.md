@@ -36,7 +36,7 @@
 
 ## Block 3 – Graph Algorithms (Required)
 
-- [ ] Activity 14 – BFS (Breadth-First Search)
+- [ x] Activity 14 – BFS (Breadth-First Search)
 - [ ] Activity 15 – DFS (Depth-First Search)
 - [ ] Activity 16 – Shortest paths (basic)
 - [ ] Activity 17 – Distance matrix

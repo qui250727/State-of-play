@@ -188,4 +188,23 @@ class GraphMatrixTest {
                 "It is NOT a weight graph.";
         assertEquals(expected, gm.toString());
     }
+
+    @Test
+    public void testGetNeighbors() throws InvalidMatrixException{
+        int[][] data = {
+                {0, 1, 1, 1},
+                {1, 0, 1, 1},
+                {1, 1, 0, 1},
+                {1, 1, 1, 0}
+        };
+        GraphMatrix gm = new GraphMatrix(data, false);
+        ArrayList<Integer> neighbors0 = gm.getNeighbors(0);
+        assertEquals("[1, 2, 3]",neighbors0.toString());
+        ArrayList<Integer> neighbors1 = gm.getNeighbors(1);
+        assertEquals("[0, 2, 3]",neighbors1.toString());
+        ArrayList<Integer> neighbors2 = gm.getNeighbors(2);
+        assertEquals("[0, 1, 3]",neighbors2.toString());
+        ArrayList<Integer> neighbors3 = gm.getNeighbors(3);
+        assertEquals("[0, 1, 2]",neighbors3.toString());
+    }
 }
