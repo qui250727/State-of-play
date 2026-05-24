@@ -25,7 +25,7 @@ public class Main {
         System.out.println("Node 1 neighbors:");
         System.out.println(gm0.getNeighbors(1));
         System.out.println("-------------------");
-        System.out.println("DFS with startnode 1: ");
-        System.out.println(ga.dfs(1));
+        System.out.println("Shortest path with startnode 1 and endnode 9: ");
+        System.out.println(ga.shortestPath(1,9));
     }
 }

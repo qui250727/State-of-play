@@ -74,6 +74,41 @@ public class GraphAlghoritm {
         return closed;
     }
 
-
+    public ArrayList<Integer> shortestPath(int startNode, int endNode){
+        ArrayList<Integer> path = new ArrayList<>(); //order of the shortest path (product list)
+        boolean[] visited = new boolean[graph.getRows()];//list of nodes that have been or haven't been already visited
+        ArrayList<Integer> open = new ArrayList<>();//list of nodes that have been already visited
+        visited[startNode]=true; //firstnode would be marked as visited
+        int[] previusNode = new int [graph.getRows()];
+        for (int i = 0; i < previusNode.length; i++){
+            previusNode[i]=-1;
+        }//loop that checks the previus node of a node
+        visited[startNode]=true;//the start node is markt as true
+        open.add(startNode);//then it goes to the open list
+        boolean found = false; //has it found the endnode?
+        while(open.isEmpty()==false){//the open list have an element in then:
+            int currentNode = open.remove(0);//we take out the first element of the open list
+            if(currentNode == endNode){
+                found = true;
+                break;
+            }//if this node is the endnode break the loop
+            ArrayList<Integer> neighbors = graph.getNeighbors(currentNode); //list of the nodes who have a connection with a node
+            for(int neighbor:neighbors){
+                if(visited[neighbor]==false){
+                    visited[neighbor]=true;
+                    previusNode[neighbor]=currentNode;
+                    open.add(neighbor);
+                }//we take the element who has a connection with the previous node and he goes to the visited order list, what starts a loop who adds it to the product list.
+        }
+        }if (found == false){
+            return path;
+        }//if the endnode was not found it returns an empry path
+        int current = endNode; //it starts the reconstruction from the endnode
+        while (current !=-1){
+            path.add(0,current);
+            current = previusNode[current];
+        }//it reconstruct the shortest path backwards from the endnode
+        return path;
+    }
 
 }

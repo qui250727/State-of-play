@@ -2,7 +2,7 @@
 
 ## Overall Progress
 - [x ] Block 1 – Java Matrices
-- [ ] Block 2 – Graph Fundamentals
+- [x ] Block 2 – Graph Fundamentals
 - [ ] Block 3 – Graph Algorithms (Required)
 - [ ] Block 4 – Input/Output (CSV)
 - [ ] Block 5 – Frontend (HTML, CSS, JS)
@@ -38,7 +38,7 @@
 
 - [ x] Activity 14 – BFS (Breadth-First Search)
 - [ x] Activity 15 – DFS (Depth-First Search)
-- [ ] Activity 16 – Shortest paths (basic)
+- [ x] Activity 16 – Shortest paths (basic)
 - [ ] Activity 17 – Distance matrix
 - [ ] Activity 18 – Eccentricity
 - [ ] Activity 19 – Radius

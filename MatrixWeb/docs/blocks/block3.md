@@ -293,10 +293,8 @@ Closed: [1, 4, 7, 6, 3, 5, 0, 2, 9, 8]
 
 ### Activity 33 – Shortest paths
 
-### Activity 32 – DFS
-
 #### Objective
-
+To finf the shortest papath betwwen a node a to a node b.
 #### Glossary
 
 #### Explanation
@@ -304,37 +302,134 @@ Closed: [1, 4, 7, 6, 3, 5, 0, 2, 9, 8]
 #### Code
 ```java
 
-
+public ArrayList<Integer> shortestPath(int startNode, int endNode){
+        ArrayList<Integer> path = new ArrayList<>(); //order of the shortest path (product list)
+        boolean[] visited = new boolean[graph.getRows()];//list of nodes that have been or haven't been already visited
+        ArrayList<Integer> open = new ArrayList<>();//list of nodes that have been already visited
+        visited[startNode]=true; //firstnode would be marked as visited
+        int[] previusNode = new int [graph.getRows()];
+        for (int i = 0; i < previusNode.length; i++){
+            previusNode[i]=-1;
+        }//loop that checks the previus node of a node
+        visited[startNode]=true;//the start node is markt as true
+        open.add(startNode);//then it goes to the open list
+        boolean found = false; //has it found the endnode?
+        while(open.isEmpty()==false){//the open list have an element in then:
+            int currentNode = open.remove(0);//we take out the first element of the open list
+            if(currentNode == endNode){
+                found = true;
+                break;
+            }//if this node is the endnode break the loop
+            ArrayList<Integer> neighbors = graph.getNeighbors(currentNode); //list of the nodes who have a connection with a node
+            for(int neighbor:neighbors){
+                if(visited[neighbor]==false){
+                    visited[neighbor]=true;
+                    previusNode[neighbor]=currentNode;
+                    open.add(neighbor);
+                }//we take the element who has a connection with the previous node and he goes to the visited order list, what starts a loop who adds it to the product list.
+        }
+        }if (found == false){
+            return path;
+        }//if the endnode was not found it returns an empry path
+        int current = endNode; //it starts the reconstruction from the endnode
+        while (current !=-1){
+            path.add(0,current);
+            current = previusNode[current];
+        }//it reconstruct the shortest path backwards from the endnode
+        return path;
+    }
 
 ```
 
 #### Test (Main)
 ```java
 
+public static void main(String[] args) throws InvalidMatrixException {
+        int[][] a = {
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,1,1},
+                {1,0,0,0,0,1,1,0,0,0},
+                {0,1,1,1,0,0,1,1,0,0},
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,1,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
 
+        System.out.println("GraphMatrix gm0:");
+        System.out.println(gm0.toString());;//Druckmethode probieren
+        System.out.println("Rows: "+ gm0.getRows());//getRows
+        System.out.println("Columns: "+ gm0.getColumns());//getColumns
+        System.out.println("-------------------");
+        System.out.println("Node 1 neighbors:");
+        System.out.println(gm0.getNeighbors(1));
+        System.out.println("-------------------");
+        System.out.println("Shortest path with startnode 1 and endnode 9: ");
+        System.out.println(ga.shortestPath(1,9));
+    }
 
 ```
 
 #### Test (Utest)
 ```java
 
-
+@Test
+    void testShortestPath() throws InvalidMatrixException {
+        int[][] a = {
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,1,1},
+                {1,0,0,0,0,1,1,0,0,0},
+                {0,1,1,1,0,0,1,1,0,0},
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,1,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+        assertEquals("[1, 4, 2, 9]", ga.shortestPath(1,9).toString());
+    }
 
 ```
 
 #### Example
+GraphMatrix gm0:
+0 0 0 1 0 0 0 0 0 0 
+0 0 0 0 1 0 0 0 0 0 
+0 0 0 0 1 0 0 0 1 1 
+1 0 0 0 0 1 1 0 0 0 
+0 1 1 1 0 0 1 1 0 0 
+0 0 0 1 0 0 0 0 0 0 
+0 0 0 1 1 0 0 0 0 0 
+0 0 0 0 1 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 0 
+It is NOT a weight graph.
+Rows: 10
+Columns: 10
+-------------------
+Node 1 neighbors:
+[4]
+-------------------
+Shortest path with startnode 1 and endnode 9: 
+[1, 4, 2, 9]
 
+Process finished with exit code 0
 #### Common Mistakes
 
 #### Notes
 
 #### Project Integration
-
+Now we are able to fin the shortest path between a node a to a node b of a graph.
 ---
 
 ### Activity 34 – Distance matrix
-
-### Activity 32 – DFS
 
 #### Objective
 
@@ -375,8 +470,6 @@ Closed: [1, 4, 7, 6, 3, 5, 0, 2, 9, 8]
 
 ### Activity 35 – Eccentricity
 
-### Activity 32 – DFS
-
 #### Objective
 
 #### Glossary
@@ -415,8 +508,6 @@ Closed: [1, 4, 7, 6, 3, 5, 0, 2, 9, 8]
 ---
 
 ### Activity 36 – Radius
-
-### Activity 32 – DFS
 
 #### Objective
 
@@ -457,8 +548,6 @@ Closed: [1, 4, 7, 6, 3, 5, 0, 2, 9, 8]
 
 ### Activity 37 – Diameter
 
-### Activity 32 – DFS
-
 #### Objective
 
 #### Glossary
@@ -497,8 +586,6 @@ Closed: [1, 4, 7, 6, 3, 5, 0, 2, 9, 8]
 ---
 
 ### Activity 38 – Graph center
-
-### Activity 32 – DFS
 
 #### Objective
 
@@ -539,8 +626,6 @@ Closed: [1, 4, 7, 6, 3, 5, 0, 2, 9, 8]
 
 ### Activity 39 – Connected components
 
-### Activity 32 – DFS
-
 #### Objective
 
 #### Glossary
@@ -580,8 +665,6 @@ Closed: [1, 4, 7, 6, 3, 5, 0, 2, 9, 8]
 
 ### Activity 41 – Articulation points
 
-### Activity 32 – DFS
-
 #### Objective
 
 #### Glossary
@@ -620,8 +703,6 @@ Closed: [1, 4, 7, 6, 3, 5, 0, 2, 9, 8]
 ---
 
 ### Activity 42 – Bridges
-
-### Activity 32 – DFS
 
 #### Objective
 
