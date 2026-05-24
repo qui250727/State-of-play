@@ -25,7 +25,7 @@ public class Main {
         System.out.println("Node 1 neighbors:");
         System.out.println(gm0.getNeighbors(1));
         System.out.println("-------------------");
-        System.out.println("\"BFS with startnode 1: ");
-        System.out.println(ga.bfs(1));
+        System.out.println("DFS with startnode 1: ");
+        System.out.println(ga.dfs(1));
     }
 }

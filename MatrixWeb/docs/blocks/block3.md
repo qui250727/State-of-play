@@ -19,6 +19,7 @@ Implementation of required graph algorithms.
 ### Activity 31 – BFS
 
 #### Objective
+#### Objective
 The BFS explores the graph level by level until all the visited nodes are closed (breadht).
 #### Glossary
 Visited node: Graph node that have been already reach.
@@ -156,7 +157,7 @@ Closed: [1, 4, 2, 3, 6, 7, 8, 9, 0, 5]
 ### Activity 32 – DFS
 
 #### Objective
-
+The DFS explores the graph deeply through one branch until it reaches the end of the branch and begins backtracking until all visited nodes are moved to the closed list.
 #### Glossary
 
 #### Explanation
@@ -164,25 +165,123 @@ Closed: [1, 4, 2, 3, 6, 7, 8, 9, 0, 5]
 #### Code
 ```java
 
-
+public ArrayList<Integer> dfs(int startNode){
+        ArrayList<Integer> visitedOrder = new ArrayList<>(); //order of the visited nodes (product list)
+        ArrayList<Integer> closed = new ArrayList<>();//list of the closed nodes
+        boolean[] visited = new boolean[graph.getRows()];//list of nodes that have been or haven't been already visited
+        ArrayList<Integer> open = new ArrayList<>();//list of nodes that have been already visited but are not closed
+        visited[startNode]=true; //firstnode would be marked as visited
+        open.add(startNode);//startNode goes to the open list
+        while(open.isEmpty()==false){//the open list have an element in then:
+            int currentNode = open.remove(open.size()-1);//we take out the last element of the branch to the open list
+            closed.add(currentNode);//the element that we took goes to the closed list
+            ArrayList<Integer> neighbors = graph.getNeighbors(currentNode); //list of the nodes who have a connection with a node
+            for(int neighbor:neighbors){
+                if(visited[neighbor]==false){
+                    visited[neighbor]=true;
+                    visitedOrder.add(neighbor);
+                    open.add(neighbor);
+                }//we take the element who has a connection with the previous node and he goes to the visited order list, what starts a loop who adds it to the product list point by point.
+            }
+            System.out.println("Open: "+ open);
+            System.out.println("Visited: "+ visitedOrder);
+            System.out.println("Closed: "+ closed);
+            //it prints the process step by step
+        }
+        return closed;
+    }
 
 ```
 
 #### Test (Main)
 ```java
 
+ public static void main(String[] args) throws InvalidMatrixException {
+        int[][] a = {
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,1,1},
+                {1,0,0,0,0,1,1,0,0,0},
+                {0,1,1,1,0,0,1,1,0,0},
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,1,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
 
+        System.out.println("GraphMatrix gm0:");
+        System.out.println(gm0.toString());;//Druckmethode probieren
+        System.out.println("Rows: "+ gm0.getRows());//getRows
+        System.out.println("Columns: "+ gm0.getColumns());//getColumns
+        System.out.println("-------------------");
+        System.out.println("Node 1 neighbors:");
+        System.out.println(gm0.getNeighbors(1));
+        System.out.println("-------------------");
+        System.out.println("DFS with startnode 1: ");
+        System.out.println(ga.dfs(1));
+    }
 
 ```
 
 #### Test (Utest)
 ```java
 
-
+@Test
+    void testdfs() throws InvalidMatrixException {
+        int[][] a = {
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,1,1},
+                {1,0,0,0,0,1,1,0,0,0},
+                {0,1,1,1,0,0,1,1,0,0},
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,1,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+        assertEquals("[1, 4, 7, 6, 3, 5, 0, 2, 9, 8]", ga.dfs(1).toString());
+    }
 
 ```
 
 #### Example
+
+Open: [4]
+Visited: [4]
+Closed: [1]
+Open: [2, 3, 6, 7]
+Visited: [4, 2, 3, 6, 7]
+Closed: [1, 4]
+Open: [2, 3, 6]
+Visited: [4, 2, 3, 6, 7]
+Closed: [1, 4, 7]
+Open: [2, 3]
+Visited: [4, 2, 3, 6, 7]
+Closed: [1, 4, 7, 6]
+Open: [2, 0, 5]
+Visited: [4, 2, 3, 6, 7, 0, 5]
+Closed: [1, 4, 7, 6, 3]
+Open: [2, 0]
+Visited: [4, 2, 3, 6, 7, 0, 5]
+Closed: [1, 4, 7, 6, 3, 5]
+Open: [2]
+Visited: [4, 2, 3, 6, 7, 0, 5]
+Closed: [1, 4, 7, 6, 3, 5, 0]
+Open: [8, 9]
+Visited: [4, 2, 3, 6, 7, 0, 5, 8, 9]
+Closed: [1, 4, 7, 6, 3, 5, 0, 2]
+Open: [8]
+Visited: [4, 2, 3, 6, 7, 0, 5, 8, 9]
+Closed: [1, 4, 7, 6, 3, 5, 0, 2, 9]
+Open: []
+Visited: [4, 2, 3, 6, 7, 0, 5, 8, 9]
+Closed: [1, 4, 7, 6, 3, 5, 0, 2, 9, 8]
 
 #### Common Mistakes
 

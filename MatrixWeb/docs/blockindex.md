@@ -37,7 +37,7 @@
 ## Block 3 – Graph Algorithms (Required)
 
 - [ x] Activity 14 – BFS (Breadth-First Search)
-- [ ] Activity 15 – DFS (Depth-First Search)
+- [ x] Activity 15 – DFS (Depth-First Search)
 - [ ] Activity 16 – Shortest paths (basic)
 - [ ] Activity 17 – Distance matrix
 - [ ] Activity 18 – Eccentricity
