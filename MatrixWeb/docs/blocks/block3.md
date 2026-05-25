@@ -815,40 +815,122 @@ it will help us to find the center or centers of the graph
 ### Activity 37 – Diameter
 
 #### Objective
-
+to find the biggest eccentricity of the graph
 #### Glossary
 
 #### Explanation
-
+we do a loop who check the graph in order to find the biggest eccentricity that a node can reach
 #### Code
 ```java
 
-
+public int diameter() throws InvalidMatrixException{
+        int max = -999;
+        for(int i = 0;i< graph.getRows();i++){
+            int eccentricity=eccentricity(i);
+            if (eccentricity>max){
+                max=eccentricity;
+            }
+        }
+        return max;
+    }
 
 ```
 
 #### Test (Main)
 ```java
 
+ public static void main(String[] args) throws InvalidMatrixException {
+        int[][] a = {
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,1,1},
+                {1,0,0,0,1,1,1,0,0,0},
+                {0,1,1,1,0,0,1,1,0,0},
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,1,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
 
+        System.out.println("GraphMatrix gm0:");
+        System.out.println(gm0.toString());;//Druckmethode probieren
+        System.out.println("Rows: "+ gm0.getRows());//getRows
+        System.out.println("Columns: "+ gm0.getColumns());//getColumns
+        System.out.println("Distance Matrix:");
+        System.out.println(ga.distanceMatrix());
+        System.out.println("Radius: "+ ga.radius());
+        System.out.println("Diameter: "+ ga.diameter());
+        System.out.println("Center: "+ ga.center());
+
+    }
 
 ```
 
 #### Test (Utest)
 ```java
 
-
+@Test
+    void testCenter()throws InvalidMatrixException {
+        int[][] a = {
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 1, 1},
+                {1, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                {0, 1, 1, 1, 0, 0, 1, 1, 0, 0},
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+        assertEquals("[4]", ga.center().toString());
+    }
 
 ```
 
 #### Example
+
+GraphMatrix gm0:
+0 0 0 1 0 0 0 0 0 0 
+0 0 0 0 1 0 0 0 0 0 
+0 0 0 0 1 0 0 0 1 1 
+1 0 0 0 1 1 1 0 0 0 
+0 1 1 1 0 0 1 1 0 0 
+0 0 0 1 0 0 0 0 0 0 
+0 0 0 1 1 0 0 0 0 0 
+0 0 0 0 1 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 0 
+It is NOT a weight graph.
+Rows: 10
+Columns: 10
+Distance Matrix:
+0 3 3 1 2 2 2 3 4 4 
+3 0 2 2 1 3 2 2 3 3 
+3 2 0 2 1 3 2 2 1 1 
+1 2 2 0 1 1 1 2 3 3 
+2 1 1 1 0 2 1 1 2 2 
+2 3 3 1 2 0 2 3 4 4 
+2 2 2 1 1 2 0 2 3 3 
+3 2 2 2 1 3 2 0 3 3 
+4 3 1 3 2 4 3 3 0 2 
+4 3 1 3 2 4 3 3 2 0 
+
+Radius: 2
+Diameter: 4
+Center: [4]
 
 #### Common Mistakes
 
 #### Notes
 
 #### Project Integration
-
+Now we are able to find the biggest eccentricity of the graph that a node van reach
 ---
 
 ### Activity 20 – Graph center
@@ -972,7 +1054,7 @@ Center
 #### Notes
 
 #### Project Integration
-
+Now it is posible to find the nodes with the shortest eccentricity.
 ---
 
 ### Activity 21 – Connected components

@@ -149,4 +149,23 @@ class GraphAlghoritmTest {
         GraphAlghoritm ga = new GraphAlghoritm(gm0);
         assertEquals("[4]", ga.center().toString());
     }
+
+    @Test
+    void testDiameter()throws InvalidMatrixException {
+        int[][] a = {
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 1, 1},
+                {1, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                {0, 1, 1, 1, 0, 0, 1, 1, 0, 0},
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+        assertEquals(4, ga.diameter());
+    }
 }

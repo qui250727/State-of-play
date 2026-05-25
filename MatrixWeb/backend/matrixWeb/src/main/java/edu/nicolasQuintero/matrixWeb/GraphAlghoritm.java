@@ -160,4 +160,15 @@ public class GraphAlghoritm {
         return eccentricities;
     }
 
+    public int diameter() throws InvalidMatrixException{
+        int max = -999;
+        for(int i = 0;i< graph.getRows();i++){
+            int eccentricity=eccentricity(i);
+            if (eccentricity>max){
+                max=eccentricity;
+            }
+        }
+        return max;
+    }
+
 }

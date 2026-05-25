@@ -42,7 +42,7 @@
 - [ x] Activity 17 – Distance matrix
 - [ x] Activity 18 – Eccentricity
 - [ x] Activity 19 – Radius
-- [ ] Activity 20 – Diameter
+- [ x] Activity 20 – Diameter
 - [ x] Activity 21 – Graph center
 - [ ] Activity 22 – Connected components
 - [ ] Activity 24 – Articulation points

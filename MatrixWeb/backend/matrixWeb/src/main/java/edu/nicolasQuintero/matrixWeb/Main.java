@@ -21,13 +21,11 @@ public class Main {
         System.out.println(gm0.toString());;//Druckmethode probieren
         System.out.println("Rows: "+ gm0.getRows());//getRows
         System.out.println("Columns: "+ gm0.getColumns());//getColumns
-        System.out.println("-------------------");
         System.out.println("Distance Matrix:");
         System.out.println(ga.distanceMatrix());
-        System.out.println("Radius");
-        System.out.println(ga.radius());
-        System.out.println("Center");
-        System.out.println(ga.center());
+        System.out.println("Radius: "+ ga.radius());
+        System.out.println("Diameter: "+ ga.diameter());
+        System.out.println("Center: "+ ga.center());
 
     }
 }
