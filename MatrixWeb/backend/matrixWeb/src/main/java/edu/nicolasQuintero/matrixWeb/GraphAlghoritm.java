@@ -149,4 +149,15 @@ public class GraphAlghoritm {
         return min;
     }
 
+
+    public ArrayList<Integer> center() throws InvalidMatrixException{
+        ArrayList<Integer> eccentricities = new ArrayList<>();
+        for(int i = 0;i< graph.getRows();i++){
+            if(eccentricity(i) == radius()){
+                eccentricities.add(i);
+            }
+        }
+        return eccentricities;
+    }
+
 }

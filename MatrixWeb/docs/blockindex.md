@@ -41,11 +41,10 @@
 - [ x] Activity 16 – Shortest paths (basic)
 - [ x] Activity 17 – Distance matrix
 - [ x] Activity 18 – Eccentricity
-- [ ] Activity 19 – Radius
+- [ x] Activity 19 – Radius
 - [ ] Activity 20 – Diameter
-- [ ] Activity 21 – Graph center
+- [ x] Activity 21 – Graph center
 - [ ] Activity 22 – Connected components
-- [ ] Activity 23 – Test components
 - [ ] Activity 24 – Articulation points
 - [ ] Activity 25 – Bridges
 

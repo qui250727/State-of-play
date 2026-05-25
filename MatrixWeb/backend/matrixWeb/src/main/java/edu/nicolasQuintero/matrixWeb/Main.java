@@ -26,8 +26,8 @@ public class Main {
         System.out.println(ga.distanceMatrix());
         System.out.println("Radius");
         System.out.println(ga.radius());
-        System.out.println("Eccentricity node 5:");
-        System.out.println(ga.eccentricity(5));
+        System.out.println("Center");
+        System.out.println(ga.center());
 
     }
 }

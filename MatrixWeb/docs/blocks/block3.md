@@ -416,10 +416,10 @@ GraphMatrix gm0:
 It is NOT a weight graph.
 Rows: 10
 Columns: 10
--------------------
+
 Node 1 neighbors:
 [4]
--------------------
+
 Shortest path with startnode 1 and endnode 9: 
 [1, 4, 2, 9]
 
@@ -545,7 +545,7 @@ GraphMatrix gm0:
 It is NOT a weight graph.
 Rows: 10
 Columns: 10
-----
+
 Distance Matrix:
 0 3 3 1 2 2 2 3 4 4 
 3 0 2 2 1 3 2 2 3 3 
@@ -663,7 +663,7 @@ GraphMatrix gm0:
 It is NOT a weight graph.
 Rows: 10
 Columns: 10
--------------------
+
 Distance Matrix:
 0 3 3 1 2 2 2 3 4 4 
 3 0 2 2 1 3 2 2 3 3 
@@ -786,7 +786,7 @@ GraphMatrix gm0:
 It is NOT a weight graph.
 Rows: 10
 Columns: 10
--------------------
+
 Distance Matrix:
 0 3 3 1 2 2 2 3 4 4 
 3 0 2 2 1 3 2 2 3 3 
@@ -854,33 +854,118 @@ it will help us to find the center or centers of the graph
 ### Activity 20 – Graph center
 
 #### Objective
-
+find the list of nodes who have the minimal eccentricity of the graph.
 #### Glossary
 
 #### Explanation
-
+We create a Arraylist with a loop which check the nodes of the graph in order to check wich node or nodes have the smallest eccentricity
 #### Code
 ```java
 
-
+public ArrayList<Integer> center() throws InvalidMatrixException{
+        ArrayList<Integer> eccentricities = new ArrayList<>();
+        for(int i = 0;i< graph.getRows();i++){
+            if(eccentricity(i) == radius()){
+                eccentricities.add(i);
+            }
+        }
+        return eccentricities;
+    }
 
 ```
 
 #### Test (Main)
 ```java
 
+public static void main(String[] args) throws InvalidMatrixException {
+        int[][] a = {
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,1,1},
+                {1,0,0,0,1,1,1,0,0,0},
+                {0,1,1,1,0,0,1,1,0,0},
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,1,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
 
+        System.out.println("GraphMatrix gm0:");
+        System.out.println(gm0.toString());;//Druckmethode probieren
+        System.out.println("Rows: "+ gm0.getRows());//getRows
+        System.out.println("Columns: "+ gm0.getColumns());//getColumns
+        System.out.println("-------------------");
+        System.out.println("Distance Matrix:");
+        System.out.println(ga.distanceMatrix());
+        System.out.println("Radius");
+        System.out.println(ga.radius());
+        System.out.println("Center");
+        System.out.println(ga.center());
+
+    }
 
 ```
 
 #### Test (Utest)
 ```java
 
-
+@Test
+    void testCenter()throws InvalidMatrixException {
+        int[][] a = {
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 1, 1},
+                {1, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                {0, 1, 1, 1, 0, 0, 1, 1, 0, 0},
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+        assertEquals("[4]", ga.center().toString());
+    }
 
 ```
 
 #### Example
+
+GraphMatrix gm0:
+0 0 0 1 0 0 0 0 0 0 
+0 0 0 0 1 0 0 0 0 0 
+0 0 0 0 1 0 0 0 1 1 
+1 0 0 0 1 1 1 0 0 0 
+0 1 1 1 0 0 1 1 0 0 
+0 0 0 1 0 0 0 0 0 0 
+0 0 0 1 1 0 0 0 0 0 
+0 0 0 0 1 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 0 
+It is NOT a weight graph.
+Rows: 10
+Columns: 10
+
+Distance Matrix:
+0 3 3 1 2 2 2 3 4 4 
+3 0 2 2 1 3 2 2 3 3 
+3 2 0 2 1 3 2 2 1 1 
+1 2 2 0 1 1 1 2 3 3 
+2 1 1 1 0 2 1 1 2 2 
+2 3 3 1 2 0 2 3 4 4 
+2 2 2 1 1 2 0 2 3 3 
+3 2 2 2 1 3 2 0 3 3 
+4 3 1 3 2 4 3 3 0 2 
+4 3 1 3 2 4 3 3 2 0 
+
+Radius
+2
+Center
+[4]
 
 #### Common Mistakes
 
