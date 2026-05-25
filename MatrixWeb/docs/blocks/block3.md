@@ -294,12 +294,14 @@ Closed: [1, 4, 7, 6, 3, 5, 0, 2, 9, 8]
 ### Activity 33 – Shortest paths
 
 #### Objective
+
 To finf the shortest papath betwwen a node a to a node b.
 #### Glossary
 
 #### Explanation
 
 #### Code
+
 ```java
 
 public ArrayList<Integer> shortestPath(int startNode, int endNode){
@@ -399,6 +401,7 @@ public static void main(String[] args) throws InvalidMatrixException {
 ```
 
 #### Example
+
 GraphMatrix gm0:
 0 0 0 1 0 0 0 0 0 0 
 0 0 0 0 1 0 0 0 0 0 
@@ -426,6 +429,7 @@ Process finished with exit code 0
 #### Notes
 
 #### Project Integration
+
 Now we are able to fin the shortest path between a node a to a node b of a graph.
 ---
 
@@ -433,32 +437,126 @@ Now we are able to fin the shortest path between a node a to a node b of a graph
 
 #### Objective
 
+to build a matrix that shows the distance between a node a and a node b.
 #### Glossary
 
 #### Explanation
 
+We will call a method that makes a loop for every node that calls the shortestPath methode in order to see the shortest path distance between every node. 
 #### Code
 ```java
 
-
+public Matrix distanceMatrix() throws InvalidMatrixException{
+        int [][] distances = new int [graph.getRows()][graph.getColumns()];
+        for(int i = 0; i < graph.getRows();i++){
+           for (int j = 0; j < graph.getColumns();j++){
+               ArrayList<Integer> path = shortestPath(i,j);
+               if(path.isEmpty()){
+                   distances[i][j]=-1;
+               }
+               else{
+                   distances[i][j]=path.size()-1;
+               }
+           }
+        }
+        return new Matrix(distances);
+    }
 
 ```
 
 #### Test (Main)
 ```java
 
+public static void main(String[] args) throws InvalidMatrixException {
+        int[][] a = {
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,1,1},
+                {1,0,0,0,1,1,1,0,0,0},
+                {0,1,1,1,0,0,1,1,0,0},
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,1,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
 
+        System.out.println("GraphMatrix gm0:");
+        System.out.println(gm0.toString());;//Druckmethode probieren
+        System.out.println("Rows: "+ gm0.getRows());//getRows
+        System.out.println("Columns: "+ gm0.getColumns());//getColumns
+        System.out.println("-------------------");
+        System.out.println("Distance Matrix:");
+        System.out.println(ga.distanceMatrix());
+    }
 
 ```
 
 #### Test (Utest)
 ```java
 
-
+@Test
+    void testDistanceMatrx()throws InvalidMatrixException{
+        int[][] a = {
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,1,1},
+                {1,0,0,0,1,1,1,0,0,0},
+                {0,1,1,1,0,0,1,1,0,0},
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,1,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+        String expected =
+                "0 3 3 1 2 2 2 3 4 4 \n" +
+                "3 0 2 2 1 3 2 2 3 3 \n" +
+                "3 2 0 2 1 3 2 2 1 1 \n" +
+                "1 2 2 0 1 1 1 2 3 3 \n" +
+                "2 1 1 1 0 2 1 1 2 2 \n" +
+                "2 3 3 1 2 0 2 3 4 4 \n" +
+                "2 2 2 1 1 2 0 2 3 3 \n" +
+                "3 2 2 2 1 3 2 0 3 3 \n" +
+                "4 3 1 3 2 4 3 3 0 2 \n" +
+                "4 3 1 3 2 4 3 3 2 0 \n";
+        assertEquals(expected, ga.distanceMatrix().toString());
+    }
 
 ```
 
 #### Example
+
+GraphMatrix gm0:
+0 0 0 1 0 0 0 0 0 0 
+0 0 0 0 1 0 0 0 0 0 
+0 0 0 0 1 0 0 0 1 1 
+1 0 0 0 1 1 1 0 0 0 
+0 1 1 1 0 0 1 1 0 0 
+0 0 0 1 0 0 0 0 0 0 
+0 0 0 1 1 0 0 0 0 0 
+0 0 0 0 1 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 0 
+It is NOT a weight graph.
+Rows: 10
+Columns: 10
+-------------------
+Distance Matrix:
+0 3 3 1 2 2 2 3 4 4 
+3 0 2 2 1 3 2 2 3 3 
+3 2 0 2 1 3 2 2 1 1 
+1 2 2 0 1 1 1 2 3 3 
+2 1 1 1 0 2 1 1 2 2 
+2 3 3 1 2 0 2 3 4 4 
+2 2 2 1 1 2 0 2 3 3 
+3 2 2 2 1 3 2 0 3 3 
+4 3 1 3 2 4 3 3 0 2 
+4 3 1 3 2 4 3 3 2 0 
 
 #### Common Mistakes
 
@@ -466,6 +564,7 @@ Now we are able to fin the shortest path between a node a to a node b of a graph
 
 #### Project Integration
 
+Now it is posible to show a Matrix with the shortest distance between every node.
 ---
 
 ### Activity 35 – Eccentricity

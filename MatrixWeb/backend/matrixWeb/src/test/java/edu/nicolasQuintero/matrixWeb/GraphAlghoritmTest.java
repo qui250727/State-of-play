@@ -63,4 +63,33 @@ class GraphAlghoritmTest {
         assertEquals("[1, 4, 2, 9]", ga.shortestPath(1,9).toString());
     }
 
+    @Test
+    void testDistanceMatrx()throws InvalidMatrixException{
+        int[][] a = {
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,1,1},
+                {1,0,0,0,1,1,1,0,0,0},
+                {0,1,1,1,0,0,1,1,0,0},
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,1,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+        String expected =
+                "0 3 3 1 2 2 2 3 4 4 \n" +
+                "3 0 2 2 1 3 2 2 3 3 \n" +
+                "3 2 0 2 1 3 2 2 1 1 \n" +
+                "1 2 2 0 1 1 1 2 3 3 \n" +
+                "2 1 1 1 0 2 1 1 2 2 \n" +
+                "2 3 3 1 2 0 2 3 4 4 \n" +
+                "2 2 2 1 1 2 0 2 3 3 \n" +
+                "3 2 2 2 1 3 2 0 3 3 \n" +
+                "4 3 1 3 2 4 3 3 0 2 \n" +
+                "4 3 1 3 2 4 3 3 2 0 \n";
+        assertEquals(expected, ga.distanceMatrix().toString());
+    }
 }

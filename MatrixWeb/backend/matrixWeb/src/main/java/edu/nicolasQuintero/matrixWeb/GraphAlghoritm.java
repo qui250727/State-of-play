@@ -111,4 +111,20 @@ public class GraphAlghoritm {
         return path;
     }
 
+    public Matrix distanceMatrix() throws InvalidMatrixException{
+        int [][] distances = new int [graph.getRows()][graph.getColumns()];
+        for(int i = 0; i < graph.getRows();i++){
+           for (int j = 0; j < graph.getColumns();j++){
+               ArrayList<Integer> path = shortestPath(i,j);
+               if(path.isEmpty()){
+                   distances[i][j]=-1;
+               }
+               else{
+                   distances[i][j]=path.size()-1;
+               }
+           }
+        }
+        return new Matrix(distances);
+    }
+
 }

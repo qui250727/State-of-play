@@ -6,7 +6,7 @@ public class Main {
                 {0,0,0,1,0,0,0,0,0,0},
                 {0,0,0,0,1,0,0,0,0,0},
                 {0,0,0,0,1,0,0,0,1,1},
-                {1,0,0,0,0,1,1,0,0,0},
+                {1,0,0,0,1,1,1,0,0,0},
                 {0,1,1,1,0,0,1,1,0,0},
                 {0,0,0,1,0,0,0,0,0,0},
                 {0,0,0,1,1,0,0,0,0,0},
@@ -22,10 +22,7 @@ public class Main {
         System.out.println("Rows: "+ gm0.getRows());//getRows
         System.out.println("Columns: "+ gm0.getColumns());//getColumns
         System.out.println("-------------------");
-        System.out.println("Node 1 neighbors:");
-        System.out.println(gm0.getNeighbors(1));
-        System.out.println("-------------------");
-        System.out.println("Shortest path with startnode 1 and endnode 9: ");
-        System.out.println(ga.shortestPath(1,9));
+        System.out.println("Distance Matrix:");
+        System.out.println(ga.distanceMatrix());
     }
 }
