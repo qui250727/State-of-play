@@ -16,7 +16,7 @@ Implementation of required graph algorithms.
 
 ## Activities
 
-### Activity 31 – BFS
+### Activity 14 – BFS
 
 #### Objective
 #### Objective
@@ -154,7 +154,7 @@ Closed: [1, 4, 2, 3, 6, 7, 8, 9, 0, 5]
  
 ---
 
-### Activity 32 – DFS
+### Activity 15 – DFS
 
 #### Objective
 The DFS explores the graph deeply through one branch until it reaches the end of the branch and begins backtracking until all visited nodes are moved to the closed list.
@@ -291,7 +291,7 @@ Closed: [1, 4, 7, 6, 3, 5, 0, 2, 9, 8]
 
 ---
 
-### Activity 33 – Shortest paths
+### Activity 16 – Shortest paths
 
 #### Objective
 
@@ -433,7 +433,7 @@ Process finished with exit code 0
 Now we are able to fin the shortest path between a node a to a node b of a graph.
 ---
 
-### Activity 34 – Distance matrix
+### Activity 17 – Distance matrix
 
 #### Objective
 
@@ -567,7 +567,7 @@ Distance Matrix:
 Now it is posible to show a Matrix with the shortest distance between every node.
 ---
 
-### Activity 35 – Eccentricity
+### Activity 18 – Eccentricity
 
 #### Objective
 To find the farest node where a node can go.
@@ -687,43 +687,129 @@ Eccentricity node 5:
 now we are able to now the maximal distance that a node is able to reach.
 ---
 
-### Activity 36 – Radius
+### Activity 19 – Radius
 
 #### Objective
-
+to find the lowest eccentricity from the graph
 #### Glossary
 
 #### Explanation
-
+We use the eccentricity method and we create a loop that checks the graph in order to find the minimal eccentricity.
 #### Code
 ```java
 
-
+public int radius() throws InvalidMatrixException{
+        int min = 99999999;
+        for(int i = 0;i< graph.getRows();i++){
+            int eccentricity=eccentricity(i);
+            if (eccentricity<min){
+                min=eccentricity;
+            }
+        }
+        return min;
+    }
 
 ```
 
 #### Test (Main)
 ```java
 
+public static void main(String[] args) throws InvalidMatrixException {
+        int[][] a = {
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,1,1},
+                {1,0,0,0,1,1,1,0,0,0},
+                {0,1,1,1,0,0,1,1,0,0},
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,1,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
 
+        System.out.println("GraphMatrix gm0:");
+        System.out.println(gm0.toString());;//Druckmethode probieren
+        System.out.println("Rows: "+ gm0.getRows());//getRows
+        System.out.println("Columns: "+ gm0.getColumns());//getColumns
+        System.out.println("-------------------");
+        System.out.println("Distance Matrix:");
+        System.out.println(ga.distanceMatrix());
+        System.out.println("Radius");
+        System.out.println(ga.radius());
+        System.out.println("Eccentricity node 5:");
+        System.out.println(ga.eccentricity(5));
+
+    }
 
 ```
 
 #### Test (Utest)
 ```java
 
-
+@Test
+    void testRadius()throws InvalidMatrixException {
+        int[][] a = {
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 1, 1},
+                {1, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                {0, 1, 1, 1, 0, 0, 1, 1, 0, 0},
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+        assertEquals(2, ga.radius());
+    }
 
 ```
 
 #### Example
+
+GraphMatrix gm0:
+0 0 0 1 0 0 0 0 0 0 
+0 0 0 0 1 0 0 0 0 0 
+0 0 0 0 1 0 0 0 1 1 
+1 0 0 0 1 1 1 0 0 0 
+0 1 1 1 0 0 1 1 0 0 
+0 0 0 1 0 0 0 0 0 0 
+0 0 0 1 1 0 0 0 0 0 
+0 0 0 0 1 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 0 
+It is NOT a weight graph.
+Rows: 10
+Columns: 10
+-------------------
+Distance Matrix:
+0 3 3 1 2 2 2 3 4 4 
+3 0 2 2 1 3 2 2 3 3 
+3 2 0 2 1 3 2 2 1 1 
+1 2 2 0 1 1 1 2 3 3 
+2 1 1 1 0 2 1 1 2 2 
+2 3 3 1 2 0 2 3 4 4 
+2 2 2 1 1 2 0 2 3 3 
+3 2 2 2 1 3 2 0 3 3 
+4 3 1 3 2 4 3 3 0 2 
+4 3 1 3 2 4 3 3 2 0 
+
+Radius
+2
+Eccentricity node 5:
+4
 
 #### Common Mistakes
 
 #### Notes
 
 #### Project Integration
-
+it will help us to find the center or centers of the graph
 ---
 
 ### Activity 37 – Diameter
@@ -765,7 +851,7 @@ now we are able to now the maximal distance that a node is able to reach.
 
 ---
 
-### Activity 38 – Graph center
+### Activity 20 – Graph center
 
 #### Objective
 
@@ -804,7 +890,7 @@ now we are able to now the maximal distance that a node is able to reach.
 
 ---
 
-### Activity 39 – Connected components
+### Activity 21 – Connected components
 
 #### Objective
 
@@ -843,7 +929,7 @@ now we are able to now the maximal distance that a node is able to reach.
 
 ---
 
-### Activity 41 – Articulation points
+### Activity 22 – Articulation points
 
 #### Objective
 
@@ -882,7 +968,7 @@ now we are able to now the maximal distance that a node is able to reach.
 
 ---
 
-### Activity 42 – Bridges
+### Activity 23 – Bridges
 
 #### Objective
 

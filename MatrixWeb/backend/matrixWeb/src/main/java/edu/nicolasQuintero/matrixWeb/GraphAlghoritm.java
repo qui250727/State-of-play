@@ -138,4 +138,15 @@ public class GraphAlghoritm {
         return max;
     }
 
+    public int radius() throws InvalidMatrixException{
+        int min = 99999999;
+        for(int i = 0;i< graph.getRows();i++){
+            int eccentricity=eccentricity(i);
+            if (eccentricity<min){
+                min=eccentricity;
+            }
+        }
+        return min;
+    }
+
 }
