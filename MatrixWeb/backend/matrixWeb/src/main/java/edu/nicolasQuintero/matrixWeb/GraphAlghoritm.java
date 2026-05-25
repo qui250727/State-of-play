@@ -127,4 +127,15 @@ public class GraphAlghoritm {
         return new Matrix(distances);
     }
 
+    public int eccentricity(int node)throws InvalidMatrixException{
+        int max = -999;
+        for(int i = 0;i < graph.getColumns();i++){
+            int distance = distanceMatrix().getData()[node][i];
+            if(distance>max){
+                max=distance;
+            }
+        }
+        return max;
+    }
+
 }

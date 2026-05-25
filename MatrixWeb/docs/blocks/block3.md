@@ -545,7 +545,7 @@ GraphMatrix gm0:
 It is NOT a weight graph.
 Rows: 10
 Columns: 10
--------------------
+----
 Distance Matrix:
 0 3 3 1 2 2 2 3 4 4 
 3 0 2 2 1 3 2 2 3 3 
@@ -570,40 +570,121 @@ Now it is posible to show a Matrix with the shortest distance between every node
 ### Activity 35 – Eccentricity
 
 #### Objective
-
+To find the farest node where a node can go.
 #### Glossary
 
 #### Explanation
-
+We use the method distance matrix in order to see what is the longest distance that a node is able to achieve using a loop.
 #### Code
 ```java
 
-
+ public int eccentricity(int node)throws InvalidMatrixException{
+        int max = -999;
+        for(int i = 0;i < graph.getColumns();i++){
+            int distance = distanceMatrix().getData()[node][i];
+            if(distance>max){
+                max=distance;
+            }
+        }
+        return max;
+    }
 
 ```
 
 #### Test (Main)
 ```java
 
+public static void main(String[] args) throws InvalidMatrixException {
+        int[][] a = {
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,1,1},
+                {1,0,0,0,1,1,1,0,0,0},
+                {0,1,1,1,0,0,1,1,0,0},
+                {0,0,0,1,0,0,0,0,0,0},
+                {0,0,0,1,1,0,0,0,0,0},
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0},
+                {0,0,1,0,0,0,0,0,0,0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
 
+        System.out.println("GraphMatrix gm0:");
+        System.out.println(gm0.toString());;//Druckmethode probieren
+        System.out.println("Rows: "+ gm0.getRows());//getRows
+        System.out.println("Columns: "+ gm0.getColumns());//getColumns
+        System.out.println("-------------------");
+        System.out.println("Distance Matrix:");
+        System.out.println(ga.distanceMatrix());
+        System.out.println("Eccentricity node 5:");
+        System.out.println(ga.eccentricity(5));
+    }
 
 ```
 
 #### Test (Utest)
 ```java
 
-
+@Test
+    void testEccentricity()throws InvalidMatrixException {
+        int[][] a = {
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 1, 1},
+                {1, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                {0, 1, 1, 1, 0, 0, 1, 1, 0, 0},
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+        assertEquals(4, ga.eccentricity(5));
+    }
 
 ```
 
 #### Example
+
+GraphMatrix gm0:
+0 0 0 1 0 0 0 0 0 0 
+0 0 0 0 1 0 0 0 0 0 
+0 0 0 0 1 0 0 0 1 1 
+1 0 0 0 1 1 1 0 0 0 
+0 1 1 1 0 0 1 1 0 0 
+0 0 0 1 0 0 0 0 0 0 
+0 0 0 1 1 0 0 0 0 0 
+0 0 0 0 1 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 0 
+It is NOT a weight graph.
+Rows: 10
+Columns: 10
+-------------------
+Distance Matrix:
+0 3 3 1 2 2 2 3 4 4 
+3 0 2 2 1 3 2 2 3 3 
+3 2 0 2 1 3 2 2 1 1 
+1 2 2 0 1 1 1 2 3 3 
+2 1 1 1 0 2 1 1 2 2 
+2 3 3 1 2 0 2 3 4 4 
+2 2 2 1 1 2 0 2 3 3 
+3 2 2 2 1 3 2 0 3 3 
+4 3 1 3 2 4 3 3 0 2 
+4 3 1 3 2 4 3 3 2 0 
+
+Eccentricity node 5:
+4
 
 #### Common Mistakes
 
 #### Notes
 
 #### Project Integration
-
+now we are able to now the maximal distance that a node is able to reach.
 ---
 
 ### Activity 36 – Radius

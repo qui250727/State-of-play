@@ -40,7 +40,7 @@
 - [ x] Activity 15 – DFS (Depth-First Search)
 - [ x] Activity 16 – Shortest paths (basic)
 - [ x] Activity 17 – Distance matrix
-- [ ] Activity 18 – Eccentricity
+- [ x] Activity 18 – Eccentricity
 - [ ] Activity 19 – Radius
 - [ ] Activity 20 – Diameter
 - [ ] Activity 21 – Graph center

@@ -24,5 +24,7 @@ public class Main {
         System.out.println("-------------------");
         System.out.println("Distance Matrix:");
         System.out.println(ga.distanceMatrix());
+        System.out.println("Eccentricity node 5:");
+        System.out.println(ga.eccentricity(5));
     }
 }
