@@ -44,7 +44,8 @@
 - [ x] Activity 19 – Radius
 - [ x] Activity 20 – Diameter
 - [ x] Activity 21 – Graph center
-- [ ] Activity 22 – Connected components
+- [ x] Activity 22 – Connected components
+- [ ] Activity 23 – blocks
 - [ ] Activity 24 – Articulation points
 - [ ] Activity 25 – Bridges
 

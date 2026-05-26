@@ -1060,40 +1060,238 @@ Now it is posible to find the nodes with the shortest eccentricity.
 ### Activity 21 – Connected components
 
 #### Objective
-
+to show if the graph is coneccted or it divide itself in diferent components
 #### Glossary
 
 #### Explanation
-
+we needed to create a copy of the method bfs and give it the propierty boolean visited in order to create a loop that check the bfs of the graph for every node. That way it will check if all the nodes are conected or not and it will separete it in a list of components. In order to follow that logic, it was better to change the diameter, center and radius method, they dont return just a value now, they return the value for every component becausewe change them to arraylist for every component.
 #### Code
 ```java
 
+public ArrayList<Integer> bfsComponents(int startNode, boolean[] visited){
+        ArrayList<Integer> visitedOrder = new ArrayList<>(); //order of the visited nodes (product list)
+        ArrayList<Integer> closed = new ArrayList<>();//list of the closed nodes
+        ArrayList<Integer> open = new ArrayList<>();//list of nodes that have been already visited but are not closed
+        visited[startNode]=true; //firstnode would be marked as visited
+        open.add(startNode);//startNode goes to the open list
+        while(open.isEmpty()==false){//the open list have an element in then:
+            int currentNode = open.remove(0);//we take out that element from the  open list
+            closed.add(currentNode);//the element that we took goes to the closed list
+            ArrayList<Integer> neighbors = graph.getNeighbors(currentNode); //list of the nodes who have a connection with a node
+            for(int neighbor:neighbors){
+                if(visited[neighbor]==false){
+                    visited[neighbor]=true;
+                    visitedOrder.add(neighbor);
+                    open.add(neighbor);
+                }//we take the element who has a connection with the previous node and he goes to the visited order list, what starts a loop who adds it to the product list point by point.
+            }
+        }
+        return closed;
+    }
 
+    public ArrayList<ArrayList<Integer>> components(){
+        ArrayList<ArrayList<Integer>> components = new ArrayList<>();//we have a arraylist from another array list
+        boolean[] visited = new boolean[graph.getRows()];//it marks a node as visited to avoid to repeat components
+        for(int i = 0;i< graph.getRows();i++){//check the graph
+            if(visited[i]==false){
+                ArrayList<Integer> component = bfsComponents(i,visited);//it searches the connected nodes
+                components.add(component);//it adds it to component list
+            }
+        }
+        return components; //it returns the list of components of a graph
+    }
+
+    public ArrayList<Integer> radiuses() throws InvalidMatrixException{
+        ArrayList<Integer> radius = new ArrayList<>();
+        for(ArrayList<Integer> component: components()){
+            int min = 99999999;
+            for(int node: component){
+                int eccentricity = eccentricity(node);
+                if(eccentricity < min){
+                    min = eccentricity;
+                }
+            }
+            radius.add(min);
+        }
+        return radius;
+    }
+
+
+    public ArrayList<ArrayList<Integer>>center() throws InvalidMatrixException{
+        ArrayList<ArrayList<Integer>> centers = new ArrayList<>();
+        ArrayList<Integer> radius = radiuses();
+        ArrayList<ArrayList<Integer>> components = components();
+        for (int i = 0; i<components.size();i++){
+            ArrayList<Integer> center = new ArrayList<>();
+            int radiuses = radius.get(i);
+            for(int node: components.get(i)){
+                if (eccentricity(node)==radiuses){
+                    center.add(node);
+                }
+            }
+            centers.add(center);
+        }
+        return centers;
+    }
+
+    public ArrayList<Integer> diameters() throws InvalidMatrixException{
+        ArrayList<Integer> diameter = new ArrayList<>();
+        for(ArrayList<Integer> component: components()){
+            int max = -99999999;
+            for(int node: component){
+                int eccentricity = eccentricity(node);
+                if(eccentricity > max){
+                    max = eccentricity;
+                }
+            }
+            diameter.add(max);
+        }
+        return diameter;
+    }
 
 ```
 
 #### Test (Main)
 ```java
 
+public static void main(String[] args) throws InvalidMatrixException {
+        int[][] a = {
+                {0,1,0,0,0,0,0,0,0,0},
+                {1,0,1,0,0,0,0,0,0,0},
+                {0,1,0,0,0,0,0,0,0,0},
 
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,0,1,0,1,0,0,0,0},
+                {0,0,0,0,1,0,1,0,0,0},
+                {0,0,0,0,0,1,0,0,0,0},
+
+                {0,0,0,0,0,0,0,0,1,0},
+                {0,0,0,0,0,0,0,1,0,0},
+
+                {0,0,0,0,0,0,0,0,0,0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+
+        System.out.println("GraphMatrix gm0:");
+        System.out.println(gm0.toString());;//Druckmethode probieren
+        System.out.println("Rows: "+ gm0.getRows());//getRows
+        System.out.println("Columns: "+ gm0.getColumns());//getColumns
+        System.out.println("Distance Matrix:");
+        System.out.println(ga.distanceMatrix());
+        System.out.println("Components:");
+        System.out.println(ga.components());
+        System.out.println("Radius: "+ ga.radiuses());
+        System.out.println("Diameter: "+ ga.diameters());
+        System.out.println("Center: "+ ga.center());
+
+    }
 
 ```
 
 #### Test (Utest)
 ```java
 
+ @Test
+    void testRadiuses()throws InvalidMatrixException {
+        int[][] a = {
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 1, 1},
+                {1, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                {0, 1, 1, 1, 0, 0, 1, 1, 0, 0},
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+        assertEquals("[2]", ga.radiuses().toString());
+    }
 
+    @Test
+    void testCenters()throws InvalidMatrixException {
+        int[][] a = {
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 1, 1},
+                {1, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                {0, 1, 1, 1, 0, 0, 1, 1, 0, 0},
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+        assertEquals("[[4]]", ga.center().toString());
+    }
+
+    @Test
+    void testDiameters()throws InvalidMatrixException {
+        int[][] a = {
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 1, 1},
+                {1, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                {0, 1, 1, 1, 0, 0, 1, 1, 0, 0},
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+        assertEquals("[4]", ga.diameters().toString());
+    }
 
 ```
 
 #### Example
+
+GraphMatrix gm0:
+0 1 0 0 0 0 0 0 0 0 
+1 0 1 0 0 0 0 0 0 0 
+0 1 0 0 0 0 0 0 0 0 
+0 0 0 0 1 0 0 0 0 0 
+0 0 0 1 0 1 0 0 0 0 
+0 0 0 0 1 0 1 0 0 0 
+0 0 0 0 0 1 0 0 0 0 
+0 0 0 0 0 0 0 0 1 0 
+0 0 0 0 0 0 0 1 0 0 
+0 0 0 0 0 0 0 0 0 0 
+It is NOT a weight graph.
+Rows: 10
+Columns: 10
+Distance Matrix:
+0 1 2 -1 -1 -1 -1 -1 -1 -1 
+1 0 1 -1 -1 -1 -1 -1 -1 -1 
+2 1 0 -1 -1 -1 -1 -1 -1 -1 
+-1 -1 -1 0 1 2 3 -1 -1 -1 
+-1 -1 -1 1 0 1 2 -1 -1 -1 
+-1 -1 -1 2 1 0 1 -1 -1 -1 
+-1 -1 -1 3 2 1 0 -1 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 0 1 -1 
+-1 -1 -1 -1 -1 -1 -1 1 0 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 -1 0 
+
+Components:
+[[0, 1, 2], [3, 4, 5, 6], [7, 8], [9]]
+Radius: [1, 2, 1, 0]
+Diameter: [2, 3, 1, 0]
+Center: [[1], [4, 5], [7, 8], [9]]
+
 
 #### Common Mistakes
 
 #### Notes
 
 #### Project Integration
-
+Now it is posible to interpretate a graph as a conected or a desconected graph and to interpretate his propierties as components.
 ---
 
 ### Activity 22 – Articulation points

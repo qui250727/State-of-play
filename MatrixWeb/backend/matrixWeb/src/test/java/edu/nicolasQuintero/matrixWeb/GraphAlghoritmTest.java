@@ -113,7 +113,7 @@ class GraphAlghoritmTest {
     }
 
     @Test
-    void testRadius()throws InvalidMatrixException {
+    void testRadiuses()throws InvalidMatrixException {
         int[][] a = {
                 {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
@@ -128,11 +128,11 @@ class GraphAlghoritmTest {
         };
         GraphMatrix gm0 = new GraphMatrix(a, false);
         GraphAlghoritm ga = new GraphAlghoritm(gm0);
-        assertEquals(2, ga.radius());
+        assertEquals("[2]", ga.radiuses().toString());
     }
 
     @Test
-    void testCenter()throws InvalidMatrixException {
+    void testCenters()throws InvalidMatrixException {
         int[][] a = {
                 {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
@@ -147,11 +147,11 @@ class GraphAlghoritmTest {
         };
         GraphMatrix gm0 = new GraphMatrix(a, false);
         GraphAlghoritm ga = new GraphAlghoritm(gm0);
-        assertEquals("[4]", ga.center().toString());
+        assertEquals("[[4]]", ga.center().toString());
     }
 
     @Test
-    void testDiameter()throws InvalidMatrixException {
+    void testDiameters()throws InvalidMatrixException {
         int[][] a = {
                 {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
@@ -166,6 +166,6 @@ class GraphAlghoritmTest {
         };
         GraphMatrix gm0 = new GraphMatrix(a, false);
         GraphAlghoritm ga = new GraphAlghoritm(gm0);
-        assertEquals(4, ga.diameter());
+        assertEquals("[4]", ga.diameters().toString());
     }
 }
