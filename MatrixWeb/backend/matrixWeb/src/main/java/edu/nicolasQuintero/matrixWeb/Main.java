@@ -23,5 +23,8 @@ public class Main {
         MatrixWorkspace mw = new MatrixWorkspace();
         mw.addMatrix(gm0);
         mw.exportCSV(gm0, "matrixTest.csv");
+        Matrix imported = mw.importCSV("matrixTest.csv");
+        System.out.println(imported.toString());
+        
     }
 }

@@ -53,7 +53,7 @@
 ## Block 4 – Input / Output (CSV)
 
 - [ x] Activity 26 – export CSV
-- [ ] Activity 27 – import CSV
+- [ x] Activity 27 – import CSV
 
 ---
 

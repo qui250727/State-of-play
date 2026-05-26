@@ -1,8 +1,6 @@
 package edu.nicolasQuintero.matrixWeb;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 
 public class MatrixWorkspace {
@@ -82,5 +80,34 @@ public class MatrixWorkspace {
         }
         pw.close();
     }
+
+    public Matrix importCSV(String path)throws InvalidMatrixException, IOException{
+        BufferedReader br = new BufferedReader(new FileReader(path));
+        ArrayList<int[]> rows = new ArrayList<>();
+        String line;
+        while((line = br.readLine()) != null){
+            String[] values = line.split(";");
+            int[] row = new int[values.length];
+            for(int i =0;i< values.length;i++){
+                row[i]= Integer.parseInt(values[i]);
+            }
+            rows.add(row);
+        }
+        br.close();
+        int[][] data= new int [rows.size()][rows.get(0).length];
+        for (int i = 0;i <rows.size();i++){
+            data[i]= rows.get(i);
+        }
+        return new Matrix(data);
+    }
+
+    public GraphMatrix matrixToGraph(Matrix m, boolean isWeightGraph) throws InvalidMatrixException{
+        return new GraphMatrix(m.getData(), isWeightGraph);
+    }
+
+    public Matrix GraphToMatrix(GraphMatrix gm) throws InvalidMatrixException{
+        return new Matrix(gm.getData());
+    }
+
 
 }
