@@ -233,4 +233,25 @@ public class GraphAlghoritm {
         return articulations;
     }
 
+    public ArrayList<ArrayList<Integer>> bridges()throws InvalidMatrixException{
+        ArrayList<ArrayList<Integer>> bridges = new ArrayList<>();
+        int originalComponents = components().size();
+        for(int i = 0; i< graph.getRows();i++){
+            for (int j = i+1; j<graph.getColumns();j++){
+                if (graph.getData()[i][j]==1){
+                   GraphMatrix newGraph = graph.removeEdge(i,j);
+                   GraphAlghoritm ga = new GraphAlghoritm(newGraph);
+                   int newComponents = ga.components().size();
+                   if(newComponents>originalComponents){
+                       ArrayList<Integer> bridge = new ArrayList<>();
+                       bridge.add(i);
+                       bridge.add(j);
+                       bridges.add(bridge);
+                   }
+                }
+            }
+        }
+        return bridges;
+    }
+
 }

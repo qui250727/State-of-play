@@ -3,19 +3,19 @@ package edu.nicolasQuintero.matrixWeb;
 public class Main {
     public static void main(String[] args) throws InvalidMatrixException {
         int[][] a = {
-                {0,1,0,0,0,0,0,0,0,0},
+                {0,1,0,1,0,0,0,0,0,0},
                 {1,0,1,0,0,0,0,0,0,0},
-                {0,1,0,0,0,0,0,0,0,0},
+                {0,1,0,1,0,0,0,0,0,0},
+                {1,0,1,0,1,0,0,0,0,0},
 
-                {0,0,0,0,1,0,0,0,0,0},
                 {0,0,0,1,0,1,0,0,0,0},
+
                 {0,0,0,0,1,0,1,0,0,0},
-                {0,0,0,0,0,1,0,0,0,0},
+                {0,0,0,0,0,1,0,1,0,0},
+                {0,0,0,0,0,0,1,0,0,0},
 
-                {0,0,0,0,0,0,0,0,1,0},
-                {0,0,0,0,0,0,0,1,0,0},
-
-                {0,0,0,0,0,0,0,0,0,0}
+                {0,0,0,0,0,0,0,0,0,1},
+                {0,0,0,0,0,0,0,0,1,0}
         };
         GraphMatrix gm0 = new GraphMatrix(a, false);
         GraphAlghoritm ga = new GraphAlghoritm(gm0);
@@ -32,6 +32,7 @@ public class Main {
         System.out.println("Diameter: "+ ga.diameters());
         System.out.println("Center: "+ ga.center());
         System.out.println("Articulations: "+ga.articulations());
+        System.out.println("Bridges: "+ga.bridges() );
 
     }
 }

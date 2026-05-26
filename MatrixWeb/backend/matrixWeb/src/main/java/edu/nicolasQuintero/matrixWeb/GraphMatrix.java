@@ -105,6 +105,20 @@ public class GraphMatrix extends Matrix{
        return new GraphMatrix(newMatrix,false);
     }
 
+    public GraphMatrix removeEdge(int node1, int node2) throws InvalidMatrixException{
+        int[][] newMatrix = new int[getRows()][getColumns()];
+        for(int i = 0; i<getRows();i++){
+            for(int j = 0;j<getColumns();j++){
+                newMatrix[i][j]=getData()[i][j];
+            }
+        }
+        newMatrix[node1][node2]=0;
+        if(isaWeightGraph==false){
+            newMatrix[node2][node1]=0;
+        }
+        return new GraphMatrix(newMatrix,false);
+    }
+
     @Override
     public String toString() {
         if (isaWeightGraph){

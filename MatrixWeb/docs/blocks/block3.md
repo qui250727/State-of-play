@@ -1455,6 +1455,165 @@ It will help us to define the blocks and the bridges
 ### Activity 23 – Bridges
 
 #### Objective
+to find the edges that if we take them off, they create new components in a graph.
+#### Glossary
+
+#### Explanation
+The proccess is kind of similar to the articulations method. But this time we create a method removeEdge in the graphMatrix class in order to use it in the GraphAlghoritm class as a find Bridges method wich create a loop that compares a graph with und without taking out an edge in order to see if there are more components or not.
+#### Code(MatrixGraph)
+```java
+
+public GraphMatrix removeEdge(int node1, int node2) throws InvalidMatrixException{
+        int[][] newMatrix = new int[getRows()][getColumns()];
+        for(int i = 0; i<getRows();i++){
+            for(int j = 0;j<getColumns();j++){
+                newMatrix[i][j]=getData()[i][j];
+            }
+        }
+        newMatrix[node1][node2]=0;
+        if(isaWeightGraph==false){
+            newMatrix[node2][node1]=0;
+        }
+        return new GraphMatrix(newMatrix,false);
+    }
+
+```
+#### Code(GraphAlghorithm)
+```java
+
+public ArrayList<ArrayList<Integer>> bridges()throws InvalidMatrixException{
+        ArrayList<ArrayList<Integer>> bridges = new ArrayList<>();
+        int originalComponents = components().size();
+        for(int i = 0; i< graph.getRows();i++){
+            for (int j = i+1; j<graph.getColumns();j++){
+                if (graph.getData()[i][j]==1){
+                   GraphMatrix newGraph = graph.removeEdge(i,j);
+                   GraphAlghoritm ga = new GraphAlghoritm(newGraph);
+                   int newComponents = ga.components().size();
+                   if(newComponents>originalComponents){
+                       ArrayList<Integer> bridge = new ArrayList<>();
+                       bridge.add(i);
+                       bridge.add(j);
+                       bridges.add(bridge);
+                   }
+                }
+            }
+        }
+        return bridges;
+    }
+
+```
+
+#### Test (Main)
+```java
+
+public static void main(String[] args) throws InvalidMatrixException {
+        int[][] a = {
+                {0,1,0,1,0,0,0,0,0,0},
+                {1,0,1,0,0,0,0,0,0,0},
+                {0,1,0,1,0,0,0,0,0,0},
+                {1,0,1,0,1,0,0,0,0,0},
+
+                {0,0,0,1,0,1,0,0,0,0},
+
+                {0,0,0,0,1,0,1,0,0,0},
+                {0,0,0,0,0,1,0,1,0,0},
+                {0,0,0,0,0,0,1,0,0,0},
+
+                {0,0,0,0,0,0,0,0,0,1},
+                {0,0,0,0,0,0,0,0,1,0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+
+        System.out.println("GraphMatrix gm0:");
+        System.out.println(gm0.toString());;//Druckmethode probieren
+        System.out.println("Rows: "+ gm0.getRows());//getRows
+        System.out.println("Columns: "+ gm0.getColumns());//getColumns
+        System.out.println("Distance Matrix:");
+        System.out.println(ga.distanceMatrix());
+        System.out.println("Components:");
+        System.out.println(ga.components());
+        System.out.println("Radius: "+ ga.radiuses());
+        System.out.println("Diameter: "+ ga.diameters());
+        System.out.println("Center: "+ ga.center());
+        System.out.println("Articulations: "+ga.articulations());
+        System.out.println("Bridges: "+ga.bridges() );
+
+    }
+
+```
+
+#### Test (Utest)
+```java
+
+@Test
+    void testBridges()throws InvalidMatrixException {
+        int[][] a = {
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 1, 1},
+                {1, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                {0, 1, 1, 1, 0, 0, 1, 1, 0, 0},
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+        assertEquals("[[0, 3], [1, 4], [2, 4], [2, 8], [2, 9], [3, 5], [4, 7]]", ga.bridges().toString());
+    }
+```
+
+#### Example
+
+GraphMatrix gm0:
+0 1 0 1 0 0 0 0 0 0 
+1 0 1 0 0 0 0 0 0 0 
+0 1 0 1 0 0 0 0 0 0 
+1 0 1 0 1 0 0 0 0 0 
+0 0 0 1 0 1 0 0 0 0 
+0 0 0 0 1 0 1 0 0 0 
+0 0 0 0 0 1 0 1 0 0 
+0 0 0 0 0 0 1 0 0 0 
+0 0 0 0 0 0 0 0 0 1 
+0 0 0 0 0 0 0 0 1 0 
+It is NOT a weight graph.
+Rows: 10
+Columns: 10
+Distance Matrix:
+0 1 2 1 2 3 4 5 -1 -1 
+1 0 1 2 3 4 5 6 -1 -1 
+2 1 0 1 2 3 4 5 -1 -1 
+1 2 1 0 1 2 3 4 -1 -1 
+2 3 2 1 0 1 2 3 -1 -1 
+3 4 3 2 1 0 1 2 -1 -1 
+4 5 4 3 2 1 0 1 -1 -1 
+5 6 5 4 3 2 1 0 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 0 1 
+-1 -1 -1 -1 -1 -1 -1 -1 1 0 
+
+Components:
+[[0, 1, 3, 2, 4, 5, 6, 7], [8, 9]]
+Radius: [3, 1]
+Diameter: [6, 1]
+Center: [[4], [8, 9]]
+Articulations: [3, 4, 5, 6]
+Bridges: [[3, 4], [4, 5], [5, 6], [6, 7], [8, 9]]
+
+#### Common Mistakes
+
+#### Notes
+
+#### Project Integration
+Now we can use this method and the articulations for the blocks method
+---
+
+### Activity 24 – Blocks
+
+#### Objective
 
 #### Glossary
 

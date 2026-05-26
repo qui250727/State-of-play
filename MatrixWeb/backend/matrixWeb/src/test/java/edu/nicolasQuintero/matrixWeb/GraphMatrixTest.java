@@ -225,4 +225,23 @@ class GraphMatrixTest {
                 "It is NOT a weight graph.";
         assertEquals(expected, gm.toString());
     }
+
+    @Test
+    public void testRemoveEdge() throws InvalidMatrixException {
+        int[][] data = {
+                {0, 1, 1, 1},
+                {1, 0, 1, 1},
+                {1, 1, 0, 1},
+                {1, 1, 1, 0}
+        };
+        GraphMatrix gm = new GraphMatrix(data, false);
+        gm=gm.removeEdge(0,1);
+        String expected =
+                "0 0 1 1 \n" +
+                "0 0 1 1 \n" +
+                "1 1 0 1 \n" +
+                "1 1 1 0 \n" +
+                "It is NOT a weight graph.";
+        assertEquals(expected, gm.toString());
+    }
 }

@@ -47,7 +47,7 @@
 - [ x] Activity 22 – Connected components
 - [ ] Activity 23 – blocks
 - [ x] Activity 24 – Articulation points
-- [ ] Activity 25 – Bridges
+- [ x] Activity 25 – Bridges
 
 ---
 
