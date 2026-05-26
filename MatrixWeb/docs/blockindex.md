@@ -52,10 +52,8 @@
 
 ## Block 4 – Input / Output (CSV)
 
-- [ ] Activity 26 – Read CSV file
-- [ ] Activity 27 – Parse CSV to matrix
-- [ ] Activity 28 – Validate input data
-- [ ] Activity 29 – Error handling
+- [ x] Activity 26 – export CSV
+- [ ] Activity 27 – import CSV
 
 ---
 

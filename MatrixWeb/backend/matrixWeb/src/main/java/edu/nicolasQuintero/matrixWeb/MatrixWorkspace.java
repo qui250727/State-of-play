@@ -1,5 +1,8 @@
 package edu.nicolasQuintero.matrixWeb;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class MatrixWorkspace {
@@ -64,6 +67,20 @@ public class MatrixWorkspace {
             }
         }
         return new Matrix(result);
+    }
+
+    public void exportCSV(Matrix m, String path) throws IOException{
+        PrintWriter pw = new PrintWriter(new FileWriter(path));
+        for (int i = 0; i<m.getRows();i++){
+            for(int j = 0; j<m.getColumns();j++){
+                pw.print(m.getData()[i][j]);
+                if (j<m.getColumns()-1){
+                    pw.print(";");
+                }
+            }
+            pw.println();
+        }
+        pw.close();
     }
 
 }
