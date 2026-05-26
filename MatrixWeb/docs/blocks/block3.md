@@ -1615,39 +1615,147 @@ Now we can use this method and the articulations for the blocks method
 
 #### Objective
 
+to find the blocks of the graph, they are elements that are conecteed by articulations througth bridges.
+
 #### Glossary
 
 #### Explanation
+what this method does is creating a loop that also create a copy of the graph, but without the bridges, and it compares bouth of them and if the new graph have more components without the bridge it adds it to the block list. It also adds the bridges to the block list.
 
 #### Code
 ```java
 
-
+public ArrayList<ArrayList<Integer>> blocks() throws InvalidMatrixException{
+        GraphMatrix newGraph = graph;
+        ArrayList<ArrayList<Integer>> bridges = bridges();
+        for(ArrayList<Integer> bridge:bridges){
+            int node1 = bridge.get(0);
+            int node2 = bridge.get(1);
+            newGraph = newGraph.removeEdge(node1,node2);
+        }
+        GraphAlghoritm ga = new GraphAlghoritm(newGraph);
+        ArrayList<ArrayList<Integer>> blocks = new ArrayList<>();
+        for(ArrayList<Integer> component :ga.components()){
+            if(component.size()>1){
+                blocks.add(component);
+            }
+        }
+        for(ArrayList<Integer> bridge:bridges){
+            blocks.add(bridge);
+        }
+        return blocks;
+    }
 
 ```
 
 #### Test (Main)
 ```java
 
+public static void main(String[] args) throws InvalidMatrixException {
+        int[][] a = {
+                {0,1,0,1,0,0,0,0,0,0},
+                {1,0,1,0,0,0,0,0,0,0},
+                {0,1,0,1,0,0,0,0,0,0},
+                {1,0,1,0,1,0,0,0,0,0},
 
+                {0,0,0,1,0,1,0,0,0,0},
+
+                {0,0,0,0,1,0,1,0,0,0},
+                {0,0,0,0,0,1,0,1,0,0},
+                {0,0,0,0,0,0,1,0,0,0},
+
+                {0,0,0,0,0,0,0,0,0,1},
+                {0,0,0,0,0,0,0,0,1,0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+
+        System.out.println("GraphMatrix gm0:");
+        System.out.println(gm0.toString());;//Druckmethode probieren
+        System.out.println("Rows: "+ gm0.getRows());//getRows
+        System.out.println("Columns: "+ gm0.getColumns());//getColumns
+        System.out.println("Distance Matrix:");
+        System.out.println(ga.distanceMatrix());
+        System.out.println("Components:");
+        System.out.println(ga.components());
+        System.out.println("Radius: "+ ga.radiuses());
+        System.out.println("Diameter: "+ ga.diameters());
+        System.out.println("Center: "+ ga.center());
+        System.out.println("Articulations: "+ga.articulations());
+        System.out.println("Bridges: "+ga.bridges());
+        System.out.println("Blocks: "+ga.blocks());
+    }
 
 ```
 
 #### Test (Utest)
 ```java
 
-
+ @Test
+    void testBlocks()throws InvalidMatrixException {
+        int[][] a = {
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 1, 1},
+                {1, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                {0, 1, 1, 1, 0, 0, 1, 1, 0, 0},
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+        assertEquals( "[[3, 4, 6], [0, 3], [1, 4], [2, 4], [2, 8], [2, 9], [3, 5], [4, 7]]", ga.blocks().toString());
+    }
 
 ```
 
 #### Example
+
+GraphMatrix gm0:
+0 1 0 1 0 0 0 0 0 0 
+1 0 1 0 0 0 0 0 0 0 
+0 1 0 1 0 0 0 0 0 0 
+1 0 1 0 1 0 0 0 0 0 
+0 0 0 1 0 1 0 0 0 0 
+0 0 0 0 1 0 1 0 0 0 
+0 0 0 0 0 1 0 1 0 0 
+0 0 0 0 0 0 1 0 0 0 
+0 0 0 0 0 0 0 0 0 1 
+0 0 0 0 0 0 0 0 1 0 
+It is NOT a weight graph.
+Rows: 10
+Columns: 10
+Distance Matrix:
+0 1 2 1 2 3 4 5 -1 -1 
+1 0 1 2 3 4 5 6 -1 -1 
+2 1 0 1 2 3 4 5 -1 -1 
+1 2 1 0 1 2 3 4 -1 -1 
+2 3 2 1 0 1 2 3 -1 -1 
+3 4 3 2 1 0 1 2 -1 -1 
+4 5 4 3 2 1 0 1 -1 -1 
+5 6 5 4 3 2 1 0 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 0 1 
+-1 -1 -1 -1 -1 -1 -1 -1 1 0 
+
+Components:
+[[0, 1, 3, 2, 4, 5, 6, 7], [8, 9]]
+Radius: [3, 1]
+Diameter: [6, 1]
+Center: [[4], [8, 9]]
+Articulations: [3, 4, 5, 6]
+Bridges: [[3, 4], [4, 5], [5, 6], [6, 7], [8, 9]]
+Blocks: [[0, 1, 3, 2], [3, 4], [4, 5], [5, 6], [6, 7], [8, 9]]
+
 
 #### Common Mistakes
 
 #### Notes
 
 #### Project Integration
-
+Now we are able to identify every element from a graph.
 ---
 
 ---

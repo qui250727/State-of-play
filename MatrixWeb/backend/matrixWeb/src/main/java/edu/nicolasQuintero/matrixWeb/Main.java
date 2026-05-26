@@ -32,7 +32,8 @@ public class Main {
         System.out.println("Diameter: "+ ga.diameters());
         System.out.println("Center: "+ ga.center());
         System.out.println("Articulations: "+ga.articulations());
-        System.out.println("Bridges: "+ga.bridges() );
+        System.out.println("Bridges: "+ga.bridges());
+        System.out.println("Blocks: "+ga.blocks());
 
     }
 }

@@ -254,4 +254,25 @@ public class GraphAlghoritm {
         return bridges;
     }
 
+    public ArrayList<ArrayList<Integer>> blocks() throws InvalidMatrixException{
+        GraphMatrix newGraph = graph;
+        ArrayList<ArrayList<Integer>> bridges = bridges();
+        for(ArrayList<Integer> bridge:bridges){
+            int node1 = bridge.get(0);
+            int node2 = bridge.get(1);
+            newGraph = newGraph.removeEdge(node1,node2);
+        }
+        GraphAlghoritm ga = new GraphAlghoritm(newGraph);
+        ArrayList<ArrayList<Integer>> blocks = new ArrayList<>();
+        for(ArrayList<Integer> component :ga.components()){
+            if(component.size()>1){
+                blocks.add(component);
+            }
+        }
+        for(ArrayList<Integer> bridge:bridges){
+            blocks.add(bridge);
+        }
+        return blocks;
+    }
+
 }

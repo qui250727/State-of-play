@@ -45,10 +45,9 @@
 - [ x] Activity 20 – Diameter
 - [ x] Activity 21 – Graph center
 - [ x] Activity 22 – Connected components
-- [ ] Activity 23 – blocks
-- [ x] Activity 24 – Articulation points
-- [ x] Activity 25 – Bridges
-
+- [ x] Activity 23 – Articulation points
+- [ x] Activity 24 – Bridges
+- [ x] Activity 25 – blocks
 ---
 
 ## Block 4 – Input / Output (CSV)
