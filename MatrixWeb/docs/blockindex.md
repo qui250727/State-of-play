@@ -46,7 +46,7 @@
 - [ x] Activity 21 – Graph center
 - [ x] Activity 22 – Connected components
 - [ ] Activity 23 – blocks
-- [ ] Activity 24 – Articulation points
+- [ x] Activity 24 – Articulation points
 - [ ] Activity 25 – Bridges
 
 ---

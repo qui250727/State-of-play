@@ -219,4 +219,18 @@ public class GraphAlghoritm {
         return components; //it returns the list of components of a graph
     }
 
+    public ArrayList<Integer> articulations()throws InvalidMatrixException{
+        ArrayList<Integer> articulations = new ArrayList<>();
+        int originalComponents = components().size();
+        for(int i = 0; i< graph.getRows();i++){
+            GraphMatrix newGraph = graph.removeNode(i);
+            GraphAlghoritm ga = new GraphAlghoritm(newGraph);
+            int newComponents=ga.components().size();
+            if(newComponents>originalComponents){
+                articulations.add(i);
+            }
+        }
+        return articulations;
+    }
+
 }

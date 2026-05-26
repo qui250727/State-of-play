@@ -85,6 +85,26 @@ public class GraphMatrix extends Matrix{
         return neighbors;
     }
 
+    public GraphMatrix removeNode(int node) throws InvalidMatrixException{
+       int[][] newMatrix = new int[getRows()-1][getColumns()-1];
+       int newRow = 0;
+       for(int i = 0; i<getRows();i++){
+           if(i == node){
+               continue;
+           }
+           int newColumn = 0;
+           for (int j = 0;j<getColumns();j++){
+               if(j==node){
+                   continue;
+               }
+               newMatrix[newRow][newColumn] = getData()[i][j];
+               newColumn++;
+           }
+           newRow++;
+       }
+       return new GraphMatrix(newMatrix,false);
+    }
+
     @Override
     public String toString() {
         if (isaWeightGraph){

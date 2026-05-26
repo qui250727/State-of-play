@@ -31,6 +31,7 @@ public class Main {
         System.out.println("Radius: "+ ga.radiuses());
         System.out.println("Diameter: "+ ga.diameters());
         System.out.println("Center: "+ ga.center());
+        System.out.println("Articulations: "+ga.articulations());
 
     }
 }

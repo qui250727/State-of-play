@@ -1297,40 +1297,159 @@ Now it is posible to interpretate a graph as a conected or a desconected graph a
 ### Activity 22 – Articulation points
 
 #### Objective
-
+to find witch nodes create new components in the graph if we take them off.
 #### Glossary
 
 #### Explanation
-
-#### Code
+We needed to create a removeNode method in the GraphMatrix class in order to use it in the GRaphalgoritm class in a loop that compares a graph without a node and one with the node in order to see if it has more conponents or not and define de node as an articulation.
+#### Code (GraphMatrix)
 ```java
 
+public GraphMatrix removeNode(int node) throws InvalidMatrixException{
+       int[][] newMatrix = new int[getRows()-1][getColumns()-1];
+       int newRow = 0;
+       for(int i = 0; i<getRows();i++){
+           if(i == node){
+               continue;
+           }
+           int newColumn = 0;
+           for (int j = 0;j<getColumns();j++){
+               if(j==node){
+                   continue;
+               }
+               newMatrix[newRow][newColumn] = getData()[i][j];
+               newColumn++;
+           }
+           newRow++;
+       }
+       return new GraphMatrix(newMatrix,false);
+    }
 
+```
+#### Code (GraphAlghoritm)
+```java
+
+public ArrayList<Integer> articulations()throws InvalidMatrixException{
+        ArrayList<Integer> articulations = new ArrayList<>();
+        int originalComponents = components().size();
+        for(int i = 0; i< graph.getRows();i++){
+            GraphMatrix newGraph = graph.removeNode(i);
+            GraphAlghoritm ga = new GraphAlghoritm(newGraph);
+            int newComponents=ga.components().size();
+            if(newComponents>originalComponents){
+                articulations.add(i);
+            }
+        }
+        return articulations;
+    }
 
 ```
 
 #### Test (Main)
 ```java
 
+    public static void main(String[] args) throws InvalidMatrixException {
+        int[][] a = {
+                {0,1,0,0,0,0,0,0,0,0},
+                {1,0,1,0,0,0,0,0,0,0},
+                {0,1,0,0,0,0,0,0,0,0},
 
+                {0,0,0,0,1,0,0,0,0,0},
+                {0,0,0,1,0,1,0,0,0,0},
+                {0,0,0,0,1,0,1,0,0,0},
+                {0,0,0,0,0,1,0,0,0,0},
+
+                {0,0,0,0,0,0,0,0,1,0},
+                {0,0,0,0,0,0,0,1,0,0},
+
+                {0,0,0,0,0,0,0,0,0,0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+
+        System.out.println("GraphMatrix gm0:");
+        System.out.println(gm0.toString());;//Druckmethode probieren
+        System.out.println("Rows: "+ gm0.getRows());//getRows
+        System.out.println("Columns: "+ gm0.getColumns());//getColumns
+        System.out.println("Distance Matrix:");
+        System.out.println(ga.distanceMatrix());
+        System.out.println("Components:");
+        System.out.println(ga.components());
+        System.out.println("Radius: "+ ga.radiuses());
+        System.out.println("Diameter: "+ ga.diameters());
+        System.out.println("Center: "+ ga.center());
+        System.out.println("Articulations: "+ga.articulations());
+
+    }
 
 ```
 
 #### Test (Utest)
 ```java
 
-
+@Test
+    void testArticulations()throws InvalidMatrixException {
+        int[][] a = {
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 1, 1},
+                {1, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                {0, 1, 1, 1, 0, 0, 1, 1, 0, 0},
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 0}
+        };
+        GraphMatrix gm0 = new GraphMatrix(a, false);
+        GraphAlghoritm ga = new GraphAlghoritm(gm0);
+        assertEquals("[2, 3, 4]", ga.articulations().toString());
+    }
 
 ```
 
 #### Example
+
+GraphMatrix gm0:
+0 1 0 0 0 0 0 0 0 0 
+1 0 1 0 0 0 0 0 0 0 
+0 1 0 0 0 0 0 0 0 0 
+0 0 0 0 1 0 0 0 0 0 
+0 0 0 1 0 1 0 0 0 0 
+0 0 0 0 1 0 1 0 0 0 
+0 0 0 0 0 1 0 0 0 0 
+0 0 0 0 0 0 0 0 1 0 
+0 0 0 0 0 0 0 1 0 0 
+0 0 0 0 0 0 0 0 0 0 
+It is NOT a weight graph.
+Rows: 10
+Columns: 10
+Distance Matrix:
+0 1 2 -1 -1 -1 -1 -1 -1 -1 
+1 0 1 -1 -1 -1 -1 -1 -1 -1 
+2 1 0 -1 -1 -1 -1 -1 -1 -1 
+-1 -1 -1 0 1 2 3 -1 -1 -1 
+-1 -1 -1 1 0 1 2 -1 -1 -1 
+-1 -1 -1 2 1 0 1 -1 -1 -1 
+-1 -1 -1 3 2 1 0 -1 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 0 1 -1 
+-1 -1 -1 -1 -1 -1 -1 1 0 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 -1 0 
+
+Components:
+[[0, 1, 2], [3, 4, 5, 6], [7, 8], [9]]
+Radius: [1, 2, 1, 0]
+Diameter: [2, 3, 1, 0]
+Center: [[1], [4, 5], [7, 8], [9]]
+Articulations: [1, 4, 5]
+
 
 #### Common Mistakes
 
 #### Notes
 
 #### Project Integration
-
+It will help us to define the blocks and the bridges
 ---
 
 ### Activity 23 – Bridges

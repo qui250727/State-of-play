@@ -207,4 +207,22 @@ class GraphMatrixTest {
         ArrayList<Integer> neighbors3 = gm.getNeighbors(3);
         assertEquals("[0, 1, 2]",neighbors3.toString());
     }
+
+    @Test
+    public void testRemoveNode() throws InvalidMatrixException {
+        int[][] data = {
+                {0, 1, 1, 1},
+                {1, 0, 1, 1},
+                {1, 1, 0, 1},
+                {1, 1, 1, 0}
+        };
+        GraphMatrix gm = new GraphMatrix(data, false);
+        gm=gm.removeNode(1);
+        String expected =
+                "0 1 1 \n" +
+                "1 0 1 \n" +
+                "1 1 0 \n" +
+                "It is NOT a weight graph.";
+        assertEquals(expected, gm.toString());
+    }
 }
