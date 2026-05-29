@@ -8,18 +8,28 @@
 <h1>Matrix Calculator</h1>
 
 <label>
-    <input type="radio" name="matrixType" value="matrix" checked>
+    <input
+        type="radio"
+        name="matrixType"
+        value="matrix"
+        checked
+        onchange="updateOptions()">
     Matrix
 </label>
 
 <label>
-    <input type="radio" name="matrixType" value="graph">
+    <input
+        type="radio"
+        name="matrixType"
+        value="graph"
+        onchange="updateOptions()">
     GraphMatrix
 </label>
 
 <br><br>
 
-<table id="matrixTable" border="1">
+<h3>Matrix A</h3>
+<table id="matrixA" border="1">
     <tr>
         <td><input type="number" value="0"></td>
         <td><input type="number" value="0"></td>
@@ -30,14 +40,37 @@
     </tr>
 </table>
 
+<button onclick="addRow('matrixA')">+ Row A</button>
+<button onclick="removeRow('matrixA')">- Row A</button>
+<button onclick="addColumn('matrixA')">+ Column A</button>
+<button onclick="removeColumn('matrixA')">- Column A</button>
+<button onclick="showMatrix('matrixA')">Show Matrix A</button>
+
+<div id="matrixBContainer" style="display: none;">
+    <h3>Matrix B</h3>
+    <table id="matrixB" border="1">
+    <tr>
+        <td><input type="number" value="0"></td>
+        <td><input type="number" value="0"></td>
+    </tr>
+    <tr>
+        <td><input type="number" value="0"></td>
+        <td><input type="number" value="0"></td>
+    </tr>
+    </table>
+
+    <button onclick="addRow('matrixB')">+ Row B</button>
+    <button onclick="removeRow('matrixB')">- Row B</button>
+    <button onclick="addColumn('matrixB')">+ Column B</button>
+    <button onclick="removeColumn('matrixB')">- Column B</button>
+    <button onclick="showMatrix('matrixB')">Show Matrix B</button>
+</div>
+
 <br>
 
-<button onclick="addRow()">+ Row</button>
-<button onclick="removeRow()">- Row</button>
+<div id="optionsContainer"></div>
 
-<button onclick="addColumn()">+ Column</button>
-<button onclick="removeColumn()">- Column</button>
-<button onclick="showMatrix()">Show Matrix</button>
+
 <script src="../app.js"></script>
 
 </body>

@@ -60,7 +60,7 @@
 ## Block 5 – Frontend (HTML, CSS, JS)
 
 - [ x] Activity 28 – Basic HTML structure
-- [ ] Activity 29 – Matrix input interface
+- [ x] Activity 29 – Matrix vs GraphMatrix
 - [ ] Activity 30 – Dynamic table generation
 - [ ] Activity 31 – Read input values
 - [ ] Activity 32 – Input validation
