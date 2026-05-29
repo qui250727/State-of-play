@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Matrix Calculator</title>
+</head>
+<body>
+
+<h1>Matrix Calculator</h1>
+
+<label>
+    <input type="radio" name="matrixType" value="matrix" checked>
+    Matrix
+</label>
+
+<label>
+    <input type="radio" name="matrixType" value="graph">
+    GraphMatrix
+</label>
+
+<br><br>
+
+<table id="matrixTable" border="1">
+    <tr>
+        <td><input type="number" value="0"></td>
+        <td><input type="number" value="0"></td>
+    </tr>
+    <tr>
+        <td><input type="number" value="0"></td>
+        <td><input type="number" value="0"></td>
+    </tr>
+</table>
+
+<br>
+
+<button onclick="addRow()">+ Row</button>
+<button onclick="removeRow()">- Row</button>
+
+<button onclick="addColumn()">+ Column</button>
+<button onclick="removeColumn()">- Column</button>
+<button onclick="showMatrix()">Show Matrix</button>
+<script src="../app.js"></script>
+
+</body>
+</html>

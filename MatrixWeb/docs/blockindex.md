@@ -59,17 +59,17 @@
 
 ## Block 5 – Frontend (HTML, CSS, JS)
 
-- [ ] Activity 47 – Basic HTML structure
-- [ ] Activity 48 – Matrix input interface
-- [ ] Activity 49 – Dynamic table generation
-- [ ] Activity 50 – Read input values
-- [ ] Activity 51 – Input validation
-- [ ] Activity 52 – File upload (CSV)
-- [ ] Activity 53 – Display matrix
-- [ ] Activity 54 – Operation buttons
-- [ ] Activity 55 – Display results
-- [ ] Activity 56 – Error handling
-- [ ] Activity 57 – Show step-by-step explanation
+- [ x] Activity 28 – Basic HTML structure
+- [ ] Activity 29 – Matrix input interface
+- [ ] Activity 30 – Dynamic table generation
+- [ ] Activity 31 – Read input values
+- [ ] Activity 32 – Input validation
+- [ ] Activity 33 – File upload (CSV)
+- [ ] Activity 34 – Display matrix
+- [ ] Activity 35 – Operation buttons
+- [ ] Activity 36 – Display results
+- [ ] Activity 37 – Error handling
+- [ ] Activity 38 – Show step-by-step explanation
 
 ---
 
