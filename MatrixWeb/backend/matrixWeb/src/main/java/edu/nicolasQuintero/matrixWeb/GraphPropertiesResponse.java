@@ -7,6 +7,9 @@ public class GraphPropertiesResponse {
     private ArrayList<Integer> radius;
     private ArrayList<Integer> diameter;
     private ArrayList<ArrayList<Integer>> center;
+    private boolean isWeighted;
+    private boolean isDirected;
+    private boolean selfLoops;
 
     public ArrayList<ArrayList<Integer>> getComponents() {
         return components;
@@ -38,5 +41,29 @@ public class GraphPropertiesResponse {
 
     public void setCenter(ArrayList<ArrayList<Integer>> center) {
         this.center = center;
+    }
+
+    public boolean isWeighted() {
+        return isWeighted;
+    }
+
+    public void setWeighted(boolean weighted) {
+        isWeighted = weighted;
+    }
+
+    public boolean isDirected() {
+        return isDirected;
+    }
+
+    public void setDirected(boolean directed) {
+        isDirected = directed;
+    }
+
+    public boolean isSelfLoops() {
+        return selfLoops;
+    }
+
+    public void setSelfLoops(boolean selfLoops) {
+        this.selfLoops = selfLoops;
     }
 }

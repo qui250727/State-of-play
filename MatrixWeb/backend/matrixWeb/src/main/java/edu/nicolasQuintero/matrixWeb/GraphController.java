@@ -26,6 +26,9 @@ public class GraphController {
         GraphMatrix gm = new GraphMatrix(request.getMatrix(), false);
         GraphAlghoritm ga= new GraphAlghoritm(gm);
         GraphPropertiesResponse response = new GraphPropertiesResponse();
+        response.setWeighted(gm.isWeighted());
+        response.setDirected(gm.isDirected());
+        response.setSelfLoops(gm.hasSelfloops());
         response.setComponents(ga.components());
         response.setRadius(ga.radiuses());
         response.setDiameter(ga.diameters());

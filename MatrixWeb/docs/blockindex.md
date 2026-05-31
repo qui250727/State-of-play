@@ -63,8 +63,8 @@
 - [ x] Activity 29 – Matrix vs GraphMatrix
 - [ x] Activity 30 – Connecting backend with frontend 
 - [ x] Activity 31 – Graph Properties Backend
-- [ ] Activity 32 – Input validation
-- [ ] Activity 33 – File upload (CSV)
+- [ x] Activity 32 – Matrix Operations
+- [ x] Activity 33 – File upload (CSV)
 - [ ] Activity 34 – Display matrix
 - [ ] Activity 35 – Operation buttons
 - [ ] Activity 36 – Display results

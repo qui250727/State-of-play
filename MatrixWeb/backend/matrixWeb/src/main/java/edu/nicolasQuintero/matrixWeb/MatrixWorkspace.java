@@ -89,11 +89,19 @@ public class MatrixWorkspace {
             String[] values = line.split(";");
             int[] row = new int[values.length];
             for(int i =0;i< values.length;i++){
-                row[i]= Integer.parseInt(values[i]);
+                try{
+                    row[i]= Integer.parseInt(values[i]);
+                }
+                catch(NumberFormatException e){
+                    throw new InvalidMatrixException("CSV contains invalid values");
+                }
             }
             rows.add(row);
         }
         br.close();
+        if(rows.isEmpty()){
+            throw new InvalidMatrixException("CSV file is emty");
+        }
         int[][] data= new int [rows.size()][rows.get(0).length];
         for (int i = 0;i <rows.size();i++){
             data[i]= rows.get(i);
@@ -108,6 +116,5 @@ public class MatrixWorkspace {
     public Matrix GraphToMatrix(GraphMatrix gm) throws InvalidMatrixException{
         return new Matrix(gm.getData());
     }
-
 
 }

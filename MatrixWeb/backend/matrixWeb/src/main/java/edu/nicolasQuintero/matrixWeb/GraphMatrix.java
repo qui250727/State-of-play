@@ -119,6 +119,17 @@ public class GraphMatrix extends Matrix{
         return new GraphMatrix(newMatrix,false);
     }
 
+    public boolean isWeighted(){
+        for(int i = 0; i<getRows();i++){
+            for (int j = 0;j<getColumns();j++){
+                if(getData()[i][j]>1){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         if (isaWeightGraph){

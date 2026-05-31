@@ -55,15 +55,17 @@ function updateOptions(){
         matrixBContainer.style.display = "block";
         container.innerHTML = `
             <h3>Matrix Operations</h3>
-            <button>Addition</button>
-            <button>Substraction</button>
-            <button>Multiplication</button>
+            <button onclick="matrixOperation('addition')">Addition</button>
+            <button onclick="matrixOperation('substraction')">Substraction</button>
+            <button onclick="matrixOperation('multiplication')">Multiplication</button>
         `;    
     }
     else{
         matrixBContainer.style.display="none";
         container.innerHTML =`
             <h3>Graph Algorithm</h3>
+            <input type="file" id="csvFile">
+            <button onclick="importCSV()"> Load CSV</button>
             <button onclick="graphProperties()">Graph Properties</button>
             <button onclick="distanceMatrix()">Distance Matrix</button>
             <button onclick="articulations()">Articulations</button>
@@ -75,102 +77,247 @@ function updateOptions(){
 updateOptions();
 
 async function graphProperties(){
-    const matrix = getMatrixData("matrixA");
-    const response = await fetch("http://localhost:8080/graphProperties",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-            matrix:matrix
-        })
-    });
-    const result = await response.json();
-    document.getElementById("result").innerHTML=
-    `<h3>Graph Properties</h3>
-    <p><b>Components:</b>
-    ${JSON.stringify(result.components)}
-    </p>
-    <p><b>Radius:</b>
-    ${JSON.stringify(result.radius)}
-    </p>
-    <p><b>Diameter:</b>
-    ${JSON.stringify(result.diameter)}
-    </p>
-    <p><b>Center:</b>
-    ${JSON.stringify(result.center)}
-    </p>
-    `;
+    try{
+        const matrix = getMatrixData("matrixA");
+        const response = await fetch("http://localhost:8080/graphProperties",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                matrix:matrix
+            })
+        });
+        if(!response.ok){
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+        const result = await response.json();
+        document.getElementById("result").innerHTML=
+        `<h3>Graph Properties</h3>
+        <p><b>Weighted:</b>
+        ${result.weighted}
+        </p>
+        <p><b>Directed:</b>
+        ${result.directed}
+        </p>
+        <p><b>Self Loops:</b>
+        ${result.selfLoops}
+        </p>
+        <p><b>Components:</b>
+        ${JSON.stringify(result.components)}
+        </p>
+        <p><b>Radius:</b>
+        ${JSON.stringify(result.radius)}
+        </p>
+        <p><b>Diameter:</b>
+        ${JSON.stringify(result.diameter)}
+        </p>
+        <p><b>Center:</b>
+        ${JSON.stringify(result.center)}
+        </p>
+        `;
+    }
+    catch(error){
+        document.getElementById("result").innerHTML=`
+        <h3>Error</h3>
+        <p>${error.message}</p>`
+    }
 }
 
 async function distanceMatrix(){
-    const matrix = getMatrixData("matrixA");
-    const response = await fetch("http://localhost:8080/distanceMatrix",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-            matrix:matrix
-        })
-    });
-    const result = await response.json();
-    document.getElementById("result").innerHTML=
-    `<h3>Distance Matrix</h3>
-    <pre>${JSON.stringify(result)}</pre>
-    `;
+    try{
+        const matrix = getMatrixData("matrixA");
+        const response = await fetch("http://localhost:8080/distanceMatrix",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                matrix:matrix
+            })
+        });
+        if(!response.ok){
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+        const result = await response.json();
+        document.getElementById("result").innerHTML=
+        `<h3>Distance Matrix</h3>
+        ${matrixToHTML(result)}
+        `;
+    }
+    catch(error){
+        document.getElementById("result").innerHTML=`
+        <h3>Error</h3>
+        <p>${error.message}</p>`
+    }
 }
 
 async function articulations(){
-    const matrix = getMatrixData("matrixA");
-    const response = await fetch("http://localhost:8080/articulations",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-            matrix:matrix
-        })
-    });
-    const result = await response.json();
-    document.getElementById("result").innerHTML=
-    `<h3>Articulations</h3>
-    <p>${JSON.stringify(result)}</p>
-    `;
+    try{
+        const matrix = getMatrixData("matrixA");
+        const response = await fetch("http://localhost:8080/articulations",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                matrix:matrix
+            })
+        });
+        if(!response.ok){
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+        const result = await response.json();
+        document.getElementById("result").innerHTML=
+        `<h3>Articulations</h3>
+        <p>${JSON.stringify(result)}</p>
+        `;
+    }
+    catch(error){
+        document.getElementById("result").innerHTML=`
+        <h3>Error</h3>
+        <p>${error.message}</p>`
+    }
 }
 
 async function bridges(){
-    const matrix = getMatrixData("matrixA");
-    const response = await fetch("http://localhost:8080/bridges",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-            matrix:matrix
-        })
-    });
-    const result = await response.json();
-    document.getElementById("result").innerHTML=
-    `<h3>Bridges</h3>
-    <p>${JSON.stringify(result)}</p>
-    `;
+    try{
+        const matrix = getMatrixData("matrixA");
+        const response = await fetch("http://localhost:8080/bridges",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                matrix:matrix
+            })
+        });
+        if(!response.ok){
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+        const result = await response.json();
+        document.getElementById("result").innerHTML=
+        `<h3>Bridges</h3>
+        <p>${JSON.stringify(result)}</p>
+        `;
+    }
+    catch(error){
+        document.getElementById("result").innerHTML=`
+        <h3>Error</h3>
+        <p>${error.message}</p>`
+    }
 }
 
 async function blocks(){
-    const matrix = getMatrixData("matrixA");
-    const response = await fetch("http://localhost:8080/blocks",{
+    try{
+        const matrix = getMatrixData("matrixA");
+        const response = await fetch("http://localhost:8080/blocks",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                matrix:matrix
+            })
+        });
+        if(!response.ok){
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+        const result = await response.json();
+        document.getElementById("result").innerHTML=
+        `<h3>Blocks</h3>
+        <p>${JSON.stringify(result)}</p>
+        `;
+    }
+    catch(error){
+        document.getElementById("result").innerHTML=`
+        <h3>Error</h3>
+        <p>${error.message}</p>`
+    }
+}
+
+async function matrixOperation(operation) {
+    try{
+        const matrixA = getMatrixData("matrixA");
+        const matrixB = getMatrixData("matrixB");
+        const response = await fetch("http://localhost:8080/"+ operation,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                matrixA:matrixA, matrixB:matrixB
+            })
+        });
+        if(!response.ok){
+            const errorMessage=await response.text();
+            throw new Error(errorMessage);
+        }
+        const result = await response.json();
+        document.getElementById("result").innerHTML = `
+        <h3>Result</h3>
+        ${matrixToHTML(result)}
+        `;
+    }
+    catch(error){
+        document.getElementById("result").innerHTML=`
+        <h3>Error</h3>
+        <p>${error.message}</p>`
+    }
+}
+
+function matrixToHTML(matrix){
+    let rows = [];
+    rows.push("<table border='1'>");
+    for(let row of matrix){
+        rows.push("<tr>");
+        for(let value of row){
+            rows.push(`<td>${value}</td>`);
+        }
+        row.push("</tr>");
+    }
+    rows.push("</table>");
+    return rows.join("");
+}
+
+async function importCSV() {
+    try{
+        const file=document.getElementById("csvFile").files[0];
+        const formData = new FormData();
+        formData.append("file",file);
+        const response = await fetch("http://localhost:8080/importCSV",
+        {
         method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-            matrix:matrix
-        })
-    });
-    const result = await response.json();
-    document.getElementById("result").innerHTML=
-    `<h3>Blocks</h3>
-    <p>${JSON.stringify(result)}</p>
-    `;
+        body:formData});
+        console.log(response);
+        const matrix=await response.json();
+        fillMatrix("matrixA", matrix);
+    }
+    catch(error){
+        document.getElementById("result").innerHTML=`
+        <h3>Error</h3>
+        <p>${error.message}</p>`
+    }
+}
+
+function fillMatrix(tableId, matrix){
+    const table =document.getElementById(tableId);
+    table.innerHTML = "";
+    for(const row of matrix){
+        const tr = document.createElement("tr");
+        for(const value of row){
+            const td = document.createElement("td");
+            const input = document.createElement("input");
+            input.type = "number";
+            input.value = value;
+            td.appendChild(input);
+            tr.appendChild(td);
+        }
+        table.appendChild(tr);
+    }
 }

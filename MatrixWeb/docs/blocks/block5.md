@@ -731,10 +731,418 @@ async function blocks(){
 
 Now we are able to show in the result div from the html the left graph propierties.
 
-### Activity 52 – File upload (CSV)
-### Activity 53 – Display matrix
-### Activity 54 – Operation buttons
-### Activity 55 – Display results
+### Activity 52 – Matrix Operations 
+
+#### Objective
+To be able to show the results of the operations between 2 matrizes
+#### Glossary
+
+#### Explanation
+In order to show the results from the operations it was needed to create a TwoMatrixRequest javaclass that contains the info from the matrix a and b, then a MatrixController javaclass that contains the the methods that would be called by the javascript async operation function and showed in the website.
+#### Code (Java) TwoMatrixRequest
+```java
+
+public class TwoMatrixRequest {
+    private int[][] matrixA;
+    private int[][] matrixB;
+
+    public int[][] getMatrixA() {
+        return matrixA;
+    }
+
+    public void setMatrixA(int[][] matrixA) {
+        this.matrixA = matrixA;
+    }
+
+    public int[][] getMatrixB() {
+        return matrixB;
+    }
+
+    public void setMatrixB(int[][] matrixB) {
+        this.matrixB = matrixB;
+    }
+}
+
+```
+#### Code (Java) MatrixController
+```java
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@CrossOrigin(origins="*")
+@RestController
+public class MatrixController {
+    @PostMapping("/addition")
+    public int [][] addition(@RequestBody TwoMatrixRequest request) throws InvalidMatrixException{
+        MatrixWorkspace mw = new MatrixWorkspace();
+        Matrix a = new Matrix (request.getMatrixA());
+        Matrix b = new Matrix (request.getMatrixB());
+        return mw.matrixAddition(a,b).getData();
+    }
+
+    @PostMapping("/substraction")
+    public int [][] substraction(@RequestBody TwoMatrixRequest request) throws InvalidMatrixException{
+        MatrixWorkspace mw = new MatrixWorkspace();
+        Matrix a = new Matrix (request.getMatrixA());
+        Matrix b = new Matrix (request.getMatrixB());
+        return mw.matrixSubstraction(a,b).getData();
+    }
+
+    @PostMapping("/multiplication")
+    public int [][] multiplication(@RequestBody TwoMatrixRequest request) throws InvalidMatrixException{
+        MatrixWorkspace mw = new MatrixWorkspace();
+        Matrix a = new Matrix (request.getMatrixA());
+        Matrix b = new Matrix (request.getMatrixB());
+        return mw.matrixMultiplication(a,b).getData();
+    }
+}
+
+
+```
+#### Code (javascript)
+```javascript
+
+async function matrixOperation(operation) {
+    const matrixA = getMatrixData("matrixA");
+    const matrixB = getMatrixData("matrixB");
+    const response = await fetch("http://localhost:8080/"+ operation,{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            matrixA:matrixA, matrixB:matrixB
+        })
+    });
+    const result = await response.json();
+    document.getElementById("result").innerHTML = `
+    <h3>Result</h3>
+    <pre>${JSON.stringify(result)}</pre>
+    `;
+}
+
+function updateOptions(){
+    const type = document.querySelector('input[name="matrixType"]:checked').value;
+    const container = document.getElementById("optionsContainer");
+    const matrixBContainer = document.getElementById("matrixBContainer");
+    if(type === "matrix"){
+        matrixBContainer.style.display = "block";
+        container.innerHTML = `
+            <h3>Matrix Operations</h3>
+            <button onclick="matrixOperation('addition')">Addition</button>
+            <button onclick="matrixOperation('substraction')">Substraction</button>
+            <button onclick="matrixOperation('multiplication')">Multiplication</button>
+        `;    
+    }
+    else{
+        matrixBContainer.style.display="none";
+        container.innerHTML =`
+            <h3>Graph Algorithm</h3>
+            <button onclick="graphProperties()">Graph Properties</button>
+            <button onclick="distanceMatrix()">Distance Matrix</button>
+            <button onclick="articulations()">Articulations</button>
+            <button onclick="bridges()">Bridges</button>
+            <button onclick="blocks()">Blocks</button>
+        `;
+    }
+}
+updateOptions();
+```
+#### Code (html)
+```html
+
+<div id="result"></div>
+
+```
+#### Example
+
+#### Common Mistakes
+
+#### Notes
+
+#### Project Integration
+
+Now we are able to see the results of the operations between 2 matrix.
+
+### Activity 33 – Matrix to html
+
+#### Objective
+to show the results that are easier to show as a matrix than as a list 
+#### Glossary
+
+#### Explanation
+We wrote a javascript function that takes the results show as list as a matrix table using two loops.
+
+#### Code (javascript)
+```javascript
+
+function matrixToHTML(matrix){
+    let rows = [];
+    rows.push("<table border='1'>");
+    for(let row of matrix){
+        rows.push("<tr>");
+        for(let value of row){
+            rows.push(`<td>${value}</td>`);
+        }
+        row.push("</tr>");
+    }
+    rows.push("</table>");
+    return rows.join("");
+}
+
+```
+#### Example
+
+#### Common Mistakes
+
+#### Notes
+
+#### Project Integration
+Now we are able to see the operations as a Matrix
+
+### Activity 34 – Error handling
+
+#### Objective
+to be able to show the java exceptions as errors in the website in order to also verify that the csv files are valid or not.
+#### Glossary
+
+#### Explanation
+We implemented a new GlobalExceptionsHandler javaclass that is able to send de exceptions messages to the javascript code trouth the SpringBoot and then we modified the async functions in the javascript with try and catch in order to receibe the messages as a result if the matrix is not valid
+#### Code (Java)
+```java
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+   @ExceptionHandler(InvalidMatrixException.class)
+   @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleInvalidMatrix(InvalidMatrixException e){
+       return e.getMessage();
+   }
+}
+
+```
+
+#### Code (javascript)
+```javascript
+
+async function graphProperties(){
+    try{
+        const matrix = getMatrixData("matrixA");
+        const response = await fetch("http://localhost:8080/graphProperties",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                matrix:matrix
+            })
+        });
+        if(!response.ok){
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+        const result = await response.json();
+        document.getElementById("result").innerHTML=
+        `<h3>Graph Properties</h3>
+        <p><b>Weighted:</b>
+        ${result.weighted}
+        </p>
+        <p><b>Directed:</b>
+        ${result.directed}
+        </p>
+        <p><b>Self Loops:</b>
+        ${result.selfLoops}
+        </p>
+        <p><b>Components:</b>
+        ${JSON.stringify(result.components)}
+        </p>
+        <p><b>Radius:</b>
+        ${JSON.stringify(result.radius)}
+        </p>
+        <p><b>Diameter:</b>
+        ${JSON.stringify(result.diameter)}
+        </p>
+        <p><b>Center:</b>
+        ${JSON.stringify(result.center)}
+        </p>
+        `;
+    }
+    catch(error){
+        document.getElementById("result").innerHTML=`
+        <h3>Error</h3>
+        <p>${error.message}</p>`
+    }
+}
+
+async function distanceMatrix(){
+    try{
+        const matrix = getMatrixData("matrixA");
+        const response = await fetch("http://localhost:8080/distanceMatrix",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                matrix:matrix
+            })
+        });
+        if(!response.ok){
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+        const result = await response.json();
+        document.getElementById("result").innerHTML=
+        `<h3>Distance Matrix</h3>
+        ${matrixToHTML(result)}
+        `;
+    }
+    catch(error){
+        document.getElementById("result").innerHTML=`
+        <h3>Error</h3>
+        <p>${error.message}</p>`
+    }
+}
+
+async function articulations(){
+    try{
+        const matrix = getMatrixData("matrixA");
+        const response = await fetch("http://localhost:8080/articulations",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                matrix:matrix
+            })
+        });
+        if(!response.ok){
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+        const result = await response.json();
+        document.getElementById("result").innerHTML=
+        `<h3>Articulations</h3>
+        <p>${JSON.stringify(result)}</p>
+        `;
+    }
+    catch(error){
+        document.getElementById("result").innerHTML=`
+        <h3>Error</h3>
+        <p>${error.message}</p>`
+    }
+}
+
+async function bridges(){
+    try{
+        const matrix = getMatrixData("matrixA");
+        const response = await fetch("http://localhost:8080/bridges",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                matrix:matrix
+            })
+        });
+        if(!response.ok){
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+        const result = await response.json();
+        document.getElementById("result").innerHTML=
+        `<h3>Bridges</h3>
+        <p>${JSON.stringify(result)}</p>
+        `;
+    }
+    catch(error){
+        document.getElementById("result").innerHTML=`
+        <h3>Error</h3>
+        <p>${error.message}</p>`
+    }
+}
+
+async function blocks(){
+    try{
+        const matrix = getMatrixData("matrixA");
+        const response = await fetch("http://localhost:8080/blocks",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                matrix:matrix
+            })
+        });
+        if(!response.ok){
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+        const result = await response.json();
+        document.getElementById("result").innerHTML=
+        `<h3>Blocks</h3>
+        <p>${JSON.stringify(result)}</p>
+        `;
+    }
+    catch(error){
+        document.getElementById("result").innerHTML=`
+        <h3>Error</h3>
+        <p>${error.message}</p>`
+    }
+}
+
+async function matrixOperation(operation) {
+    try{
+        const matrixA = getMatrixData("matrixA");
+        const matrixB = getMatrixData("matrixB");
+        const response = await fetch("http://localhost:8080/"+ operation,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                matrixA:matrixA, matrixB:matrixB
+            })
+        });
+        if(!response.ok){
+            const errorMessage=await response.text();
+            throw new Error(errorMessage);
+        }
+        const result = await response.json();
+        document.getElementById("result").innerHTML = `
+        <h3>Result</h3>
+        ${matrixToHTML(result)}
+        `;
+    }
+    catch(error){
+        document.getElementById("result").innerHTML=`
+        <h3>Error</h3>
+        <p>${error.message}</p>`
+    }
+}
+
+```
+
+#### Example
+
+#### Common Mistakes
+
+#### Notes
+
+#### Project Integration
+Now we are able to see if the graphMatrix that we inserted or generate is valid or not
+### Activity 35 – import CSV 
+
+
+
 ### Activity 56 – Error handling
 ### Activity 57 – Step-by-step explanation
 
