@@ -64,32 +64,11 @@
 - [ x] Activity 30 – Connecting backend with frontend 
 - [ x] Activity 31 – Graph Properties Backend
 - [ x] Activity 32 – Matrix Operations
-- [ x] Activity 33 – File upload (CSV)
-- [ ] Activity 34 – Display matrix
-- [ ] Activity 35 – Operation buttons
-- [ ] Activity 36 – Display results
-- [ ] Activity 37 – Error handling
-- [ ] Activity 38 – Show step-by-step explanation
+- [ x] Activity 33 – Matrix to HTML
+- [ x] Activity 34 – Error handling
+- [ x] Activity 35 – Import CSV
+- [ x] Activity 36 – CSS and IU visualisation
+
 
 ---
 
-## Block 6 – Backend (Java + Spring Boot)
-
-- [ ] Activity 58 – Create Spring Boot project
-- [ ] Activity 59 – First endpoint
-- [ ] Activity 60 – JSON input/output
-- [ ] Activity 61 – Connect frontend (fetch)
-- [ ] Activity 62 – Matrix operations endpoint
-- [ ] Activity 63 – Graph algorithms endpoint
-- [ ] Activity 64 – Error handling (API)
-- [ ] Activity 65 – Backend tests
-- [ ] Activity 66 – Full integration
-
----
-
-## Block 7 – Visualization & Didactic Mode
-
-- [ ] Activity 67 – Graph visualization setup
-- [ ] Activity 68 – Draw nodes and edges
-- [ ] Activity 69 – Highlight algorithm steps
-- [ ] Activity 70 – Final README & presentation

@@ -59,7 +59,7 @@ public class MatrixWorkspace {
         int[][] result = new int[a.getRows()][b.getColumns()];
         for (int i = 0; i < a.getRows(); i++) { //it records the rows
             for (int j = 0; j < b.getColumns(); j++) {//it records the columns
-                for (int k = 0; k < a.getColumns(); k++) { //it create the result of the next operation in the correct position
+                for (int k = 0; k < a.getColumns(); k++) { //it creates the result of the next operation in the correct position
                     result[i][j] = result[i][j] + (a.getData()[i][k] * b.getData()[k][j]);
                 }
             }

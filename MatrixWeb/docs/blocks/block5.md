@@ -14,37 +14,6 @@ User interface for matrix and graph interaction.
 - Display results
 
 ---
-## Template
-
-#### Objective
-
-#### Glossary
-
-#### Explanation
-
-#### Code (HTML)
-```html
-
-
-
-```
-
-#### Code (javascript)
-```javascript
-
-
-
-```
-
-#### Example
-
-#### Common Mistakes
-
-#### Notes
-
-#### Project Integration
-
----
 
 ## Activities
 
@@ -1141,10 +1110,175 @@ async function matrixOperation(operation) {
 Now we are able to see if the graphMatrix that we inserted or generate is valid or not
 ### Activity 35 – import CSV 
 
+#### Objective
+To be able to import csv files in the website and that they could be show in the website as graphmatrix.
+#### Glossary
 
+#### Explanation
+In order to be sure that the importCSV java method would also return error messages when the csv fles where uploaded we added more exceptions to the method, like oncompatible or empty csv files that would be returned in the result panel if they are necessary. It was also important to create the button in the updateOptions javascript function because the Load CSV file option would only appear in the graphmatrix section. Once the java method and the html button was ready we added a new method in the MatrixController class that would use the importCSV java method in java script thanks to Springboot and call it in the aysinc javascript function with help of the new fillmatrix function that interpretates the import csv as a normal generated matrix on the website.
+#### Code (Java) importCSV(MAtrixWorkspace)
+```java
 
-### Activity 56 – Error handling
-### Activity 57 – Step-by-step explanation
+public Matrix importCSV(String path)throws InvalidMatrixException, IOException{
+        BufferedReader br = new BufferedReader(new FileReader(path));
+        ArrayList<int[]> rows = new ArrayList<>();
+        String line;
+        while((line = br.readLine()) != null){
+            String[] values = line.split(";");
+            int[] row = new int[values.length];
+            for(int i =0;i< values.length;i++){
+                try{
+                    row[i]= Integer.parseInt(values[i]);
+                }
+                catch(NumberFormatException e){
+                    throw new InvalidMatrixException("CSV contains invalid values");
+                }
+            }
+            rows.add(row);
+        }
+        br.close();
+        if(rows.isEmpty()){
+            throw new InvalidMatrixException("CSV file is emty");
+        }
+        int[][] data= new int [rows.size()][rows.get(0).length];
+        for (int i = 0;i <rows.size();i++){
+            data[i]= rows.get(i);
+        }
+        return new Matrix(data);
+    }
 
+```
+
+#### Code (Java) MatrixController
+```java
+
+@PostMapping("/importCSV")
+    public int [][] importCSV(@RequestParam("file")MultipartFile file) throws InvalidMatrixException, Exception{
+        if (file.isEmpty()){
+            throw new InvalidMatrixException("No file selected.");
+        }
+        File tempFile = File.createTempFile("matrix",".csv");
+        file.transferTo(tempFile);
+        MatrixWorkspace mw = new MatrixWorkspace();
+        Matrix matrix = mw.importCSV(tempFile.getAbsolutePath());
+        return matrix.getData();
+    }
+
+```
+
+#### Code (javascript) updateOptions
+```javascript
+
+function updateOptions(){
+    const type = document.querySelector('input[name="matrixType"]:checked').value;
+    const container = document.getElementById("optionsContainer");
+    const matrixBContainer = document.getElementById("matrixBContainer");
+    if(type === "matrix"){
+        matrixBContainer.style.display = "block";
+        container.innerHTML = `
+            <h3>Matrix Operations</h3>
+            <button onclick="matrixOperation('addition')">Addition</button>
+            <button onclick="matrixOperation('substraction')">Substraction</button>
+            <button onclick="matrixOperation('multiplication')">Multiplication</button>
+        `;    
+    }
+    else{
+        matrixBContainer.style.display="none";
+        container.innerHTML =`
+            <h3>Graph Algorithm</h3>
+            <input type="file" id="csvFile">
+            <button onclick="importCSV()"> Load CSV</button>
+            <button onclick="graphProperties()">Graph Properties</button>
+            <button onclick="distanceMatrix()">Distance Matrix</button>
+            <button onclick="articulations()">Articulations</button>
+            <button onclick="bridges()">Bridges</button>
+            <button onclick="blocks()">Blocks</button>
+        `;
+    }
+}
+updateOptions();
+
+```
+#### Code (javascript) ImportCSV
+```javascript
+
+async function importCSV() {
+    try{
+        const file=document.getElementById("csvFile").files[0];
+        const formData = new FormData();
+        formData.append("file",file);
+        const response = await fetch("http://localhost:8080/importCSV",
+        {
+        method:"POST",
+        body:formData});
+        console.log(response);
+        const matrix=await response.json();
+        fillMatrix("matrixA", matrix);
+    }
+    catch(error){
+        document.getElementById("result").innerHTML=`
+        <h3>Error</h3>
+        <p>${error.message}</p>`
+    }
+}
+
+function fillMatrix(tableId, matrix){
+    const table =document.getElementById(tableId);
+    table.innerHTML = "";
+    for(const row of matrix){
+        const tr = document.createElement("tr");
+        for(const value of row){
+            const td = document.createElement("td");
+            const input = document.createElement("input");
+            input.type = "number";
+            input.value = value;
+            td.appendChild(input);
+            tr.appendChild(td);
+        }
+        table.appendChild(tr);
+    }
+}
+
+```
+
+#### Example
+
+#### Common Mistakes
+
+#### Notes
+
+#### Project Integration
+Now we are able to use all the features of the website with a selfgenerate or imported Matrix.
 ---
+
+### Activity 36 – CSS and IU visualisation
+
+#### Objective
+
+#### Glossary
+
+#### Explanation
+
+#### Code (HTML)
+```html
+
+
+
+```
+
+#### Code (javascript)
+```javascript
+
+
+
+```
+
+#### Example
+
+#### Common Mistakes
+
+#### Notes
+
+#### Project Integration
+
 
