@@ -61,8 +61,8 @@
 
 - [ x] Activity 28 – Basic HTML structure
 - [ x] Activity 29 – Matrix vs GraphMatrix
-- [ ] Activity 30 – Dynamic table generation
-- [ ] Activity 31 – Read input values
+- [ x] Activity 30 – Connecting backend with frontend 
+- [ x] Activity 31 – Graph Properties Backend
 - [ ] Activity 32 – Input validation
 - [ ] Activity 33 – File upload (CSV)
 - [ ] Activity 34 – Display matrix

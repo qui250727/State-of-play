@@ -46,10 +46,6 @@ function getMatrixData(tableId){
     return matrix;
 }//it interpretates the table data as a matrix
 
-function showMatrix(tableId){
-    const matrix = getMatrixData(tableId);
-    console.log(matrix);
-}//just to test in the console
 
 function updateOptions(){
     const type = document.querySelector('input[name="matrixType"]:checked').value;
@@ -68,13 +64,113 @@ function updateOptions(){
         matrixBContainer.style.display="none";
         container.innerHTML =`
             <h3>Graph Algorithm</h3>
-            <button>Graph Properties</button>
-            <button>Distance Matrix</button>
-            <button>Articulations</button>
-            <button>Bridges</button>
-            <button>Blocks</button>
+            <button onclick="graphProperties()">Graph Properties</button>
+            <button onclick="distanceMatrix()">Distance Matrix</button>
+            <button onclick="articulations()">Articulations</button>
+            <button onclick="bridges()">Bridges</button>
+            <button onclick="blocks()">Blocks</button>
         `;
     }
 }
-
 updateOptions();
+
+async function graphProperties(){
+    const matrix = getMatrixData("matrixA");
+    const response = await fetch("http://localhost:8080/graphProperties",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            matrix:matrix
+        })
+    });
+    const result = await response.json();
+    document.getElementById("result").innerHTML=
+    `<h3>Graph Properties</h3>
+    <p><b>Components:</b>
+    ${JSON.stringify(result.components)}
+    </p>
+    <p><b>Radius:</b>
+    ${JSON.stringify(result.radius)}
+    </p>
+    <p><b>Diameter:</b>
+    ${JSON.stringify(result.diameter)}
+    </p>
+    <p><b>Center:</b>
+    ${JSON.stringify(result.center)}
+    </p>
+    `;
+}
+
+async function distanceMatrix(){
+    const matrix = getMatrixData("matrixA");
+    const response = await fetch("http://localhost:8080/distanceMatrix",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            matrix:matrix
+        })
+    });
+    const result = await response.json();
+    document.getElementById("result").innerHTML=
+    `<h3>Distance Matrix</h3>
+    <pre>${JSON.stringify(result)}</pre>
+    `;
+}
+
+async function articulations(){
+    const matrix = getMatrixData("matrixA");
+    const response = await fetch("http://localhost:8080/articulations",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            matrix:matrix
+        })
+    });
+    const result = await response.json();
+    document.getElementById("result").innerHTML=
+    `<h3>Articulations</h3>
+    <p>${JSON.stringify(result)}</p>
+    `;
+}
+
+async function bridges(){
+    const matrix = getMatrixData("matrixA");
+    const response = await fetch("http://localhost:8080/bridges",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            matrix:matrix
+        })
+    });
+    const result = await response.json();
+    document.getElementById("result").innerHTML=
+    `<h3>Bridges</h3>
+    <p>${JSON.stringify(result)}</p>
+    `;
+}
+
+async function blocks(){
+    const matrix = getMatrixData("matrixA");
+    const response = await fetch("http://localhost:8080/blocks",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            matrix:matrix
+        })
+    });
+    const result = await response.json();
+    document.getElementById("result").innerHTML=
+    `<h3>Blocks</h3>
+    <p>${JSON.stringify(result)}</p>
+    `;
+}
