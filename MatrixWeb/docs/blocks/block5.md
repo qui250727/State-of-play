@@ -1254,22 +1254,324 @@ Now we are able to use all the features of the website with a selfgenerate or im
 ### Activity 36 – CSS and IU visualisation
 
 #### Objective
-
+To make the website look minimalist, modern and also legible in order to see the information of the matrixes.
 #### Glossary
 
 #### Explanation
-
+In order to make the website legible and friendly we modify the html code and created a css file that grouped the tables, functions and results and add a footer
 #### Code (HTML)
 ```html
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Matrix Calculator</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
 
+<body>
+
+<h1>Matrix Calculator</h1>
+
+<div class="mode-selector">
+
+    <label>
+        <input
+                type="radio"
+                name="matrixType"
+                value="matrix"
+                checked
+                onchange="updateOptions()">
+        Matrix
+    </label>
+
+    <label>
+        <input
+                type="radio"
+                name="matrixType"
+                value="graph"
+                onchange="updateOptions()">
+        GraphMatrix
+    </label>
+
+</div>
+
+<div class="main-layout">
+
+    <div class="workspace">
+
+        <div class="matrix-container">
+
+            <div class="matrix-box">
+
+                <h3>Matrix A</h3>
+
+                <table id="matrixA">
+                    <tr>
+                        <td><input type="number" value="0"></td>
+                        <td><input type="number" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="number" value="0"></td>
+                        <td><input type="number" value="0"></td>
+                    </tr>
+                </table>
+
+                <div class="button-group">
+                    <button onclick="addRow('matrixA')">+ Row A</button>
+                    <button onclick="removeRow('matrixA')">- Row A</button>
+                    <button onclick="addColumn('matrixA')">+ Column A</button>
+                    <button onclick="removeColumn('matrixA')">- Column A</button>
+                </div>
+
+            </div>
+
+            <div id="matrixBContainer" class="matrix-box" style="display:none;">
+
+                <h3>Matrix B</h3>
+
+                <table id="matrixB">
+                    <tr>
+                        <td><input type="number" value="0"></td>
+                        <td><input type="number" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="number" value="0"></td>
+                        <td><input type="number" value="0"></td>
+                    </tr>
+                </table>
+
+                <div class="button-group">
+                    <button onclick="addRow('matrixB')">+ Row B</button>
+                    <button onclick="removeRow('matrixB')">- Row B</button>
+                    <button onclick="addColumn('matrixB')">+ Column B</button>
+                    <button onclick="removeColumn('matrixB')">- Column B</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="optionsContainer"></div>
+
+    </div>
+
+    <div id="result">
+
+        <h3>Results</h3>
+
+        <p>
+            Select an operation to see the results.
+        </p>
+
+    </div>
+
+</div>
+
+<footer>
+
+    <hr>
+
+    Matrix & Graph Calculator<br>
+    Nicolas Quintero 
+</footer>
+
+<script src="../app.js"></script>
+
+</body>
+</html>
 
 ```
 
-#### Code (javascript)
+#### Code (css)
 ```javascript
 
+body{
+    font-family:"Century Gothic",sans-serif;
+    background:#f5f5f5;
+    color:#333;
 
+    margin:0;
+    padding:15px;
+}
+
+h1{
+    text-align:center;
+
+    font-size:24px;
+
+    margin-top:5px;
+    margin-bottom:10px;
+
+    color:#2f2f2f;
+}
+
+h3{
+    margin-top:0;
+    margin-bottom:8px;
+
+    font-size:15px;
+}
+
+.mode-selector{
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.mode-selector label{
+    margin-right:15px;
+    font-size:13px;
+}
+
+.main-layout{
+    display:flex;
+    gap:20px;
+    align-items:flex-start;
+    flex-wrap:wrap;
+}
+
+.workspace{
+    flex:1;
+    min-width:500px;
+}
+
+.matrix-container{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+
+    margin-bottom:15px;
+}
+
+.matrix-box{
+    background:white;
+
+    padding:10px;
+
+    border-radius:12px;
+
+    box-shadow:
+            0 3px 10px rgba(0,0,0,0.08);
+}
+
+.card{
+    background:white;
+
+    padding:10px;
+
+    border-radius:12px;
+
+    box-shadow:
+            0 3px 10px rgba(0,0,0,0.08);
+
+    width:fit-content;
+    margin-top:10px;
+}
+
+table{
+    border-collapse:collapse;
+}
+
+td{
+    padding:1px;
+}
+
+input[type="number"]{
+
+    width:28px;
+    height:18px;
+
+    text-align:center;
+
+    border:1px solid #d8d8d8;
+    border-radius:5px;
+
+    font-family:inherit;
+    font-size:11px;
+}
+
+.button-group{
+    margin-top:8px;
+}
+
+button{
+
+    background:#5b5b5b;
+    color:white;
+
+    border:none;
+
+    border-radius:7px;
+
+    padding:4px 8px;
+
+    margin:2px;
+
+    cursor:pointer;
+
+    font-size:11px;
+
+    transition:all .2s ease;
+}
+
+button:hover{
+
+    background:#3f3f3f;
+
+    transform:translateY(-2px);
+}
+
+#optionsContainer{
+    margin-top:10px;
+}
+
+#result{
+
+    flex:1;
+
+    min-width:250px;
+    max-width:320px;
+
+    background:#f8f1d8;
+
+    border-left:5px solid #f4d35e;
+
+    border-radius:12px;
+
+    padding:15px;
+
+    box-shadow:
+            0 3px 10px rgba(0,0,0,0.08);
+}
+
+#result h3{
+    margin-top:0;
+}
+
+input[type="file"]{
+    font-size:12px;
+}
+
+pre{
+    overflow-x:auto;
+}
+
+footer{
+
+    margin-top:25px;
+
+    text-align:center;
+
+    font-size:12px;
+
+    color:#777;
+}
+
+hr{
+    border:none;
+    height:1px;
+    background:#ddd;
+}
 
 ```
 
@@ -1281,4 +1583,5 @@ Now we are able to use all the features of the website with a selfgenerate or im
 
 #### Project Integration
 
+Now we are able to see all the functions and results ina afriendly and minimalist way.
 

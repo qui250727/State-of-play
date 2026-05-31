@@ -2,72 +2,115 @@
 <html>
 <head>
     <title>Matrix Calculator</title>
+    <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
 
 <h1>Matrix Calculator</h1>
 
-<label>
-    <input
-        type="radio"
-        name="matrixType"
-        value="matrix"
-        checked
-        onchange="updateOptions()">
-    Matrix
-</label>
+<div class="mode-selector">
 
-<label>
-    <input
-        type="radio"
-        name="matrixType"
-        value="graph"
-        onchange="updateOptions()">
-    GraphMatrix
-</label>
+    <label>
+        <input
+                type="radio"
+                name="matrixType"
+                value="matrix"
+                checked
+                onchange="updateOptions()">
+        Matrix
+    </label>
 
-<br><br>
+    <label>
+        <input
+                type="radio"
+                name="matrixType"
+                value="graph"
+                onchange="updateOptions()">
+        GraphMatrix
+    </label>
 
-<h3>Matrix A</h3>
-<table id="matrixA" border="1">
-    <tr>
-        <td><input type="number" value="0"></td>
-        <td><input type="number" value="0"></td>
-    </tr>
-    <tr>
-        <td><input type="number" value="0"></td>
-        <td><input type="number" value="0"></td>
-    </tr>
-</table>
-
-<button onclick="addRow('matrixA')">+ Row A</button>
-<button onclick="removeRow('matrixA')">- Row A</button>
-<button onclick="addColumn('matrixA')">+ Column A</button>
-<button onclick="removeColumn('matrixA')">- Column A</button>
-
-<div id="matrixBContainer" style="display: none;">
-    <h3>Matrix B</h3>
-    <table id="matrixB" border="1">
-    <tr>
-        <td><input type="number" value="0"></td>
-        <td><input type="number" value="0"></td>
-    </tr>
-    <tr>
-        <td><input type="number" value="0"></td>
-        <td><input type="number" value="0"></td>
-    </tr>
-    </table>
-
-    <button onclick="removeRow('matrixB')">- Row B</button>
-    <button onclick="addColumn('matrixB')">+ Column B</button>
-    <button onclick="removeColumn('matrixB')">- Column B</button>
-    <button onclick="showMatrix('matrixB')">Show Matrix B</button>
 </div>
 
-<br>
+<div class="main-layout">
 
-<div id="optionsContainer"></div>
-<div id="result"></div>
+    <div class="workspace">
+
+        <div class="matrix-container">
+
+            <div class="matrix-box">
+
+                <h3>Matrix A</h3>
+
+                <table id="matrixA">
+                    <tr>
+                        <td><input type="number" value="0"></td>
+                        <td><input type="number" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="number" value="0"></td>
+                        <td><input type="number" value="0"></td>
+                    </tr>
+                </table>
+
+                <div class="button-group">
+                    <button onclick="addRow('matrixA')">+ Row A</button>
+                    <button onclick="removeRow('matrixA')">- Row A</button>
+                    <button onclick="addColumn('matrixA')">+ Column A</button>
+                    <button onclick="removeColumn('matrixA')">- Column A</button>
+                </div>
+
+            </div>
+
+            <div id="matrixBContainer" class="matrix-box" style="display:none;">
+
+                <h3>Matrix B</h3>
+
+                <table id="matrixB">
+                    <tr>
+                        <td><input type="number" value="0"></td>
+                        <td><input type="number" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="number" value="0"></td>
+                        <td><input type="number" value="0"></td>
+                    </tr>
+                </table>
+
+                <div class="button-group">
+                    <button onclick="addRow('matrixB')">+ Row B</button>
+                    <button onclick="removeRow('matrixB')">- Row B</button>
+                    <button onclick="addColumn('matrixB')">+ Column B</button>
+                    <button onclick="removeColumn('matrixB')">- Column B</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="optionsContainer"></div>
+
+    </div>
+
+    <div id="result">
+
+        <h3>Results</h3>
+
+        <p>
+            Select an operation to see the results.
+        </p>
+
+    </div>
+
+</div>
+
+<footer>
+
+    <hr>
+
+    Matrix & Graph Calculator<br>
+    Nicolas Quintero 
+</footer>
 
 <script src="../app.js"></script>
 
