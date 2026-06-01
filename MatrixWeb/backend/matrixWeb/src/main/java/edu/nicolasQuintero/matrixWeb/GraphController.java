@@ -63,4 +63,26 @@ public class GraphController {
         GraphAlghoritm ga= new GraphAlghoritm(gm);
         return ga.blocks();
     }
+
+    @PostMapping("/bfs")
+    public ArrayList<Integer> bfs(@RequestBody GraphTransversalRequest request) throws InvalidMatrixException {
+        GraphMatrix graph = new GraphMatrix(request.getMatrix(), false);
+        GraphAlghoritm ga = new GraphAlghoritm(graph);
+        return ga.bfs(request.getStartNode());
+    }
+
+    @PostMapping("/dfs")
+    public ArrayList<Integer> dfs(@RequestBody GraphTransversalRequest request) throws InvalidMatrixException {
+        GraphMatrix graph = new GraphMatrix(request.getMatrix(), false);
+        GraphAlghoritm ga = new GraphAlghoritm(graph);
+        return ga.dfs(request.getStartNode());
+    }
+
+    @PostMapping("/eccentricity")
+    public int eccentricity(@RequestBody NodeRequest request)
+            throws InvalidMatrixException {
+        GraphMatrix graph = new GraphMatrix(request.getMatrix(), false);
+        GraphAlghoritm ga = new GraphAlghoritm(graph);
+        return ga.eccentricity(request.getNode());
+    }
 }

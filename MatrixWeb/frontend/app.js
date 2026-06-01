@@ -51,26 +51,41 @@ function updateOptions(){
     const type = document.querySelector('input[name="matrixType"]:checked').value;
     const container = document.getElementById("optionsContainer");
     const matrixBContainer = document.getElementById("matrixBContainer");
+
     if(type === "matrix"){
         matrixBContainer.style.display = "block";
         container.innerHTML = `
-            <h3>Matrix Operations</h3>
-            <button onclick="matrixOperation('addition')">Addition</button>
-            <button onclick="matrixOperation('substraction')">Substraction</button>
-            <button onclick="matrixOperation('multiplication')">Multiplication</button>
-        `;    
+            <div class="card">
+                <h3>Matrix Operations</h3>
+
+                <button onclick="matrixOperation('addition')">Addition</button>
+                <button onclick="matrixOperation('substraction')">Substraction</button>
+                <button onclick="matrixOperation('multiplication')">Multiplication</button>
+            </div>
+        `;
     }
     else{
         matrixBContainer.style.display="none";
-        container.innerHTML =`
-            <h3>Graph Algorithm</h3>
-            <input type="file" id="csvFile">
-            <button onclick="importCSV()"> Load CSV</button>
-            <button onclick="graphProperties()">Graph Properties</button>
-            <button onclick="distanceMatrix()">Distance Matrix</button>
-            <button onclick="articulations()">Articulations</button>
-            <button onclick="bridges()">Bridges</button>
-            <button onclick="blocks()">Blocks</button>
+        container.innerHTML = `
+            <div class="card">
+
+                <h3>Graph Algorithm</h3>
+
+                <input type="file" id="csvFile">
+                <button onclick="importCSV()">Load CSV</button>
+
+                <br><br>
+
+                <button onclick="graphProperties()">Graph Properties</button>
+                <button onclick="distanceMatrix()">Distance Matrix</button>
+                <button onclick="showBFSInput()">BFS</button>
+                <button onclick="showDFSInput()">DFS</button>
+                <button onclick="showEccentricityInput()">Eccentricity</button>
+                <button onclick="articulations()">Articulations</button>
+                <button onclick="bridges()">Bridges</button>
+                <button onclick="blocks()">Blocks</button>
+
+            </div>
         `;
     }
 }
@@ -319,5 +334,121 @@ function fillMatrix(tableId, matrix){
             tr.appendChild(td);
         }
         table.appendChild(tr);
+    }
+}
+
+async function bfs() {
+    try{
+        const matrix=getMatrixData("matrixA");
+        const startNode=parseInt(document.getElementById("startNode").value);
+        const response=await fetch("http://localhost:8080/bfs",
+        {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                matrix:matrix,
+                startNode:startNode
+            })
+        });
+        const result=await response.json();
+        document.getElementById("result").innerHTML=`
+        <h3>Breadth First Search (BFS)</h3>
+        <p>${result.join(" → ")}</p>
+        `;
+    }
+    catch(error){
+        document.getElementById("result").innerHTML=`
+        <h3>Error</h3>
+        <p>${error.message}</p>
+        `;
+    }
+}
+
+async function dfs() {
+    try{
+        const matrix=getMatrixData("matrixA");
+        const startNode=parseInt(document.getElementById("startNode").value);
+        const response=await fetch("http://localhost:8080/dfs",
+        {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                matrix:matrix,
+                startNode:startNode
+            })
+        });
+        const result=await response.json();
+        document.getElementById("result").innerHTML=`
+        <h3>Depth First Search (DFS)</h3>
+        <p>${result.join(" → ")}</p>
+        `;
+    }
+    catch(error){
+        document.getElementById("result").innerHTML=`
+        <h3>Error</h3>
+        <p>${error.message}</p>
+        `;
+    }
+}
+
+function showBFSInput(){
+     document.getElementById("result").innerHTML=`
+        <h3>Breadth First Search (BFS)</h3>
+        <label>Start Node:</label>
+        <input type="number" id="startNode" value="0" min="0">
+        <br><br>
+        <button onclick="bfs()">Run BFS</button>
+    `;
+}
+
+function showDFSInput(){
+    document.getElementById("result").innerHTML=`
+        <h3>Depth First Search (DFS)</h3>
+        <label>Start Node:</label>
+        <input type="number" id="startNode" value="0" min="0">
+        <br><br>
+        <button onclick="dfs()">Run DFS</button>
+    `;
+}
+
+function showEccentricityInput(){
+    document.getElementById("result").innerHTML=`
+        <h3>Eccentricity</h3>
+        <label>Node:</label>
+        <input type="number" id="node" value="0" min="0">
+        <br><br>
+        <button onclick="eccentricity()">Calculate</button>
+    `;
+}
+
+async function eccentricity() {
+    try{
+        const matrix=getMatrixData("matrixA");
+        const node=parseInt(document.getElementById("node").value);
+        const response=await fetch("http://localhost:8080/eccentricity",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                matrix:matrix,
+                node:node
+            })
+        });
+        const result=await response.json();
+        document.getElementById("result").innerHTML=`
+        <h3>Eccentricity</h3>
+        <p><b>Node ${node}:</b> ${result}</p>
+        `;
+    }
+    catch(error){
+        document.getElementById("result").innerHTML=`
+        <h3>Error</h3>
+        <p>${error.message}</p>
+        `;
     }
 }
