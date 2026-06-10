@@ -452,3 +452,17 @@ async function eccentricity() {
         `;
     }
 }
+
+function filterBlocks(){
+    const search = document.getElementById("search").value.toLowerCase();
+    const blocks = document.querySelectorAll(".block-card");
+     blocks.forEach(block => {
+        if(block.innerText.toLowerCase().includes(search)){
+            block.style.display="block";
+        }
+        else{
+            block.style.display="none";
+        }
+    });
+}
+
