@@ -17,23 +17,23 @@
 
         <div class="search-container">
 
-            <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Search documentation...">
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search documentation..."
+        onkeyup="filterDocumentation()"
+        onclick="showSuggestions()">
 
-            <div id="searchResults"></div>
+    <div id="searchResults"></div>
 
-        </div>
+</div>
 
     </div>
 
     <!-- Documentation Tab -->
 
-    <div id="documentationTab">
-
-        Documentation
-
+    <div id="documentationTab" onclick="toggleDocumentation()">
+    Documentation
     </div>
 
     <!-- Side Menu -->
@@ -115,7 +115,15 @@
 
     </div>
 
-    <script src="index.js"></script>
+    <footer>
+
+    <hr>
+
+    Matrix & Graph Calculator<br>
+    Nicolas Quintero 
+    </footer>
+
+    <script src="app.js"></script>
 
 </body>
 

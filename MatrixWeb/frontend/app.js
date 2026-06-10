@@ -89,7 +89,9 @@ function updateOptions(){
         `;
     }
 }
-updateOptions();
+if(document.querySelector('input[name="matrixType"]')){
+    updateOptions();
+}
 
 async function graphProperties(){
     try{
@@ -453,16 +455,134 @@ async function eccentricity() {
     }
 }
 
-function filterBlocks(){
-    const search = document.getElementById("search").value.toLowerCase();
-    const blocks = document.querySelectorAll(".block-card");
-     blocks.forEach(block => {
-        if(block.innerText.toLowerCase().includes(search)){
-            block.style.display="block";
-        }
-        else{
-            block.style.display="none";
-        }
-    });
+function toggleDocumentation(){
+
+    const sideMenu=document.getElementById("sideMenu");
+    const documentationTab=document.getElementById("documentationTab");
+
+    sideMenu.classList.toggle("open");
+
+    if(sideMenu.classList.contains("open")){
+        documentationTab.classList.add("hidden");
+    }
+    else{
+        documentationTab.classList.remove("hidden");
+    }
 }
 
+document.addEventListener("click", function(event){
+
+    console.log("CLICK DETECTED");
+
+    const sideMenu=document.getElementById("sideMenu");
+    const documentationTab=document.getElementById("documentationTab");
+
+    if(
+        sideMenu.classList.contains("open")
+        &&
+        !sideMenu.contains(event.target)
+        &&
+        !documentationTab.contains(event.target)
+    ){
+
+        console.log("CLOSING MENU");
+
+        sideMenu.classList.remove("open");
+        documentationTab.classList.remove("hidden");
+    }
+});
+
+const docs = [
+    {
+        title:"Java Matrices",
+        link:"pages/block1.html"
+    },
+    {
+        title:"Graph Fundamentals",
+        link:"pages/block2.html"
+    },
+    {
+        title:"Graph Algorithms",
+        link:"pages/block3.html"
+    },
+    {
+        title:"Input / Output",
+        link:"pages/block4.html"
+    },
+    {
+        title:"Frontend (HTML, CSS, JS)",
+        link:"pages/block5.html"
+    }
+];
+
+function showSuggestions(){
+
+    const results =
+        document.getElementById("searchResults");
+
+    results.innerHTML="";
+
+    docs.forEach(doc=>{
+
+        results.innerHTML += `
+            <a class="search-item"
+               href="${doc.link}">
+               ${doc.title}
+            </a>
+        `;
+    });
+
+    results.style.display="block";
+}
+
+function filterDocumentation(){
+
+    const search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const results =
+        document.getElementById("searchResults");
+
+    results.innerHTML="";
+
+    const filtered =
+        docs.filter(doc =>
+            doc.title
+            .toLowerCase()
+            .includes(search)
+        );
+
+    filtered.forEach(doc=>{
+
+        results.innerHTML += `
+            <a class="search-item"
+               href="${doc.link}">
+               ${doc.title}
+            </a>
+        `;
+    });
+
+    results.style.display =
+        filtered.length > 0
+        ? "block"
+        : "none";
+}
+
+document.addEventListener("click",function(event){
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    const searchResults =
+        document.getElementById("searchResults");
+
+    if(
+        !searchInput.contains(event.target)
+        &&
+        !searchResults.contains(event.target)
+    ){
+        searchResults.style.display="none";
+    }
+});
