@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Documentation</title>
+
+    <link rel="stylesheet" href="../style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="hero">
+
+        <h1>Documentation</h1>
+
+        <div class="doc-actions">
+
+            <button onclick="goHome()">
+    Home
+</button>
+
+<button
+    id="prevButton"
+    onclick="previousDoc()">
+
+    ← Previous
+
+</button>
+
+<button
+    id="nextButton"
+    onclick="nextDoc()">
+
+    Next →
+
+</button>
+
+        </div>
+
+        <div
+            id="documentationContent"
+            class="card">
+
+            Loading...
+
+        </div>
+
+    </div>
+
+    <script src="documentation.js"></script>
+
+</body>
+
+</html>

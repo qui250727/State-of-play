@@ -511,23 +511,23 @@ document.addEventListener("click", function(event){
 const docs = [
     {
         title:"Java Matrices",
-        link:"pages/block1.html"
+        link:"pages/documentation.html?doc=block1"
     },
     {
         title:"Graph Fundamentals",
-        link:"pages/block2.html"
+        link:"pages/documentation.html?doc=block3"
     },
     {
-        title:"Graph Algorithms",
+        title:"pages/documentation.html?doc=block4",
         link:"pages/block3.html"
     },
     {
         title:"Input / Output",
-        link:"pages/block4.html"
+        link:"pages/documentation.html?doc=block4"
     },
     {
         title:"Frontend (HTML, CSS, JS)",
-        link:"pages/block5.html"
+        link:"pages/documentation.html?doc=block5"
     }
 ];
 

@@ -13,28 +13,6 @@ Reading adjacency matrices from CSV files.
 
 ---
 
-## Template
-
-#### Objective
-
-#### Glossary
-
-#### Explanation
-
-#### Code
-```java
-```
-
-#### Example
-
-#### Common Mistakes
-
-#### Notes
-
-#### Project Integration
-
----
-
 ## Activities
 
 ### Activity 26 – Read CSV file

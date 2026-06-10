@@ -470,6 +470,87 @@ hr{
     color:var(--text);
 }
 
+.doc-actions{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:12px;
+
+    margin-bottom:25px;
+
+    flex-wrap:wrap;
+}
+
+#documentationContent{
+    width:min(850px,90%);
+    margin:auto;
+    padding:30px;
+}
+
+#documentationContent h1,
+#documentationContent h2,
+#documentationContent h3{
+
+    text-transform:none;
+}
+
+#documentationContent pre{
+
+    background:#222;
+    color:white;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    overflow-x:auto;
+
+    white-space:pre;
+
+    max-width:100%;
+}
+
+#documentationContent code{
+
+    font-family:Consolas, monospace;
+    font-size:10px;
+}
+
+.code-container{
+    position:relative;
+}
+
+.copy-button{
+
+    position:absolute;
+
+    top:10px;
+    right:10px;
+
+    background:var(--accent);
+
+    color:var(--text);
+
+    border:2px solid var(--border);
+
+    border-radius:8px;
+
+    padding:4px 8px;
+
+    font-size:11px;
+    font-weight:900;
+
+    cursor:pointer;
+
+    z-index:10;
+}
+
+.copy-button:hover{
+    background:var(--accent-soft);
+}
+
 /* =========================
    RESPONSIVE DESIGN
    ========================= */
@@ -600,5 +681,24 @@ hr{
 
     footer{
         margin-top:30px;
+    }
+
+     #documentationContent{
+
+        width:95%;
+
+        padding:15px;
+    }
+
+    #documentationContent pre{
+
+        padding:10px;
+
+        font-size:12px;
+    }
+
+    #documentationContent code{
+
+        font-size:12px;
     }
 }
