@@ -16,10 +16,26 @@ function removeRow(tableId){
 }
 
 function addColumn(tableId){
+
     const table = document.getElementById(tableId);
+
+    const currentCols = table.rows[0].cells.length;
+
+    const maxCols = window.innerWidth <= 768 ? 10 : 20;
+
+    if(currentCols >= maxCols){
+
+        document.getElementById("result").innerHTML = `
+            <h3>Warning</h3>
+            <p>Maximum number of columns reached (${maxCols}).</p>
+        `;
+
+        return;
+    }
+
     for(let row of table.rows){
         const cell = row.insertCell();
-        cell.innerHTML = '<input type= "number" value="0">';
+        cell.innerHTML = '<input type="number" value="0">';
     }
 }
 

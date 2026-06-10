@@ -20,6 +20,8 @@ body{
 
 .hero{
     flex:1;
+    padding-left:25px;
+    padding-right:25px;
 }
 
 h1{
@@ -459,6 +461,15 @@ hr{
     background:var(--accent-soft);
 }
 
+.top-actions{
+    margin-bottom:15px;
+}
+
+.top-actions button{
+    background:var(--accent);
+    color:var(--text);
+}
+
 /* =========================
    RESPONSIVE DESIGN
    ========================= */
@@ -548,9 +559,14 @@ hr{
     /* Matrix Inputs */
 
     input[type="number"]{
-        width:36px;
-        height:28px;
-        font-size:14px;
+    width:24px;
+    height:24px;
+    font-size:11px;
+    padding:0;
+    }
+
+    table{
+    border-spacing:1px;
     }
 
     /* Buttons */
